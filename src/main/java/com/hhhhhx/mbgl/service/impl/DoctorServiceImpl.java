@@ -1,15 +1,21 @@
 package com.hhhhhx.mbgl.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.hhhhhx.mbgl.entity.Doctor;
-import com.hhhhhx.mbgl.entity.Patient;
+import com.hhhhhx.mbgl.entity.DoctorDTO;
+import com.hhhhhx.mbgl.entity.User;
+import com.hhhhhx.mbgl.entity.enums.RoleEnum;
+import com.hhhhhx.mbgl.exception.MbglServiceException;
 import com.hhhhhx.mbgl.mapper.DoctorMapper;
+import com.hhhhhx.mbgl.massage.value.SystemValue;
+import com.hhhhhx.mbgl.massage.value.UserValue;
 import com.hhhhhx.mbgl.param.doctor.DoctorPageVM;
 import com.hhhhhx.mbgl.service.IDoctorService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hhhhhx.mbgl.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,53 +27,73 @@ import org.springframework.stereotype.Service;
  * @since 2022-09-17
  */
 @Service
-public class DoctorServiceImpl extends ServiceImpl<DoctorMapper, Doctor> implements IDoctorService {
+public class DoctorServiceImpl implements IDoctorService {
+
+    @Autowired
+    private IUserService userService;
 
     @Override
-    public Doctor getDoctorByUserId(Integer userId) {
+    public DoctorDTO getDoctorByUserId(Integer userId) {
 
-        return this.lambdaQuery().eq(Doctor::getUserId, userId).one();
+        User user = userService.lambdaQuery()
+                .eq(User::getId, userId)
+                .eq(User::getRoleId, RoleEnum.DOCTOR)
+                .one();
+
+        if (user == null) throw new MbglServiceException(SystemValue.SELECT_FAIL);
+
+        return BeanUtil.toBean(user, DoctorDTO.class);
     }
 
     @Override
-    public boolean updateByUserId(Doctor model) {
+    public Boolean updateByUserId(DoctorDTO param) {
 
-        // 加入没有详细资料就插入
-        Doctor doctor = getDoctorByUserId(model.getUserId());
+        DoctorDTO doctorDTO = getDoctorByUserId(param.getId());
 
-        if (doctor == null) {
-            return this.save(model);
+        if (doctorDTO == null) {
+            throw new MbglServiceException(UserValue.ROLE_ERROR);
         }
 
-        model.setId(doctor.getId());
-        return this.updateById(model);
+        User user = BeanUtil.toBean(param, User.class);
+
+        if (!userService.updateById(user)) {
+            throw new MbglServiceException(SystemValue.UPDATE_FAIL);
+        }
+
+        return Boolean.TRUE;
     }
 
     @Override
-    public Page pageDoctorOfPatient(DoctorPageVM model) {
+    public IPage<DoctorDTO> pageDoctorByParm(DoctorPageVM param) {
 
-        Page<Doctor> page = new Page<>(model.getPageIndex(), model.getPageSize());
 
-        page = (Page<Doctor>) this.baseMapper.getDoctorOfPatient(page, model.getPatientUserId(), model.getKey());
+        IPage<DoctorDTO> page;
+
+
+        if (param.getPatientUserId() != null) {
+
+            page = userService.pageDoctorOfPatient(param);
+
+        } else {
+
+
+            IPage<User> userPage = new Page<>(param.getPageIndex(), param.getPageSize());
+
+
+            LambdaQueryWrapper<User> query = new LambdaQueryWrapper<>();
+
+            if (StrUtil.isNotBlank(param.getKey())) {
+                // 条件判断写外面 不然报错
+                query.and(item ->
+                        item.like(User::getName, param.getKey())
+                                .or()
+                                .like(User::getRoom, param.getKey()));
+            }
+
+            page = userService.page(userPage, query)
+                    .convert(e -> BeanUtil.toBean(e, DoctorDTO.class));
+        }
 
         return page;
-    }
-
-    @Override
-    public Page pageDoctor(DoctorPageVM model) {
-        Page<Doctor> page = new Page<>(model.getPageIndex(), model.getPageSize());
-
-
-        LambdaQueryWrapper<Doctor> query = new LambdaQueryWrapper<>();
-
-        if(StrUtil.isNotBlank(model.getKey())) {
-            // 条件判断写外面 不然报错
-            query.and(item ->
-                    item.like(Doctor::getName, model.getKey())
-                            .or()
-                            .like(Doctor::getRoom, model.getKey()));
-        }
-
-        return this.page(page, query);
     }
 }

@@ -2,7 +2,7 @@ package com.hhhhhx.mbgl.controller;
 
 
 import com.hhhhhx.mbgl.entity.Connect;
-import com.hhhhhx.mbgl.entity.Doctor;
+import com.hhhhhx.mbgl.entity.DoctorDTO;
 import com.hhhhhx.mbgl.entity.result.RestResponse;
 import com.hhhhhx.mbgl.param.connect.ConnectApplyVM;
 import com.hhhhhx.mbgl.service.IConnectService;
@@ -56,13 +56,13 @@ public class ConnectController {
 
         Integer patientUserId = model.getPatientUserId();
         Integer doctorId = model.getDoctorId();
-        Doctor doctor = doctorService.getById(doctorId);
+        DoctorDTO doctor = doctorService.getDoctorByUserId(doctorId);
 
         if (doctor == null) {
             return RestResponse.fail();
         }
 
-        Integer doctorUserId = doctor.getUserId();
+        Integer doctorUserId = doctor.getId();
 
 
         Connect oldConnect = connectService.getConnectByDoubleId(patientUserId, doctorUserId);

@@ -1,10 +1,8 @@
 package com.hhhhhx.mbgl.controller;
 
 
-import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.hhhhhx.mbgl.entity.Doctor;
-import com.hhhhhx.mbgl.entity.Patient;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.hhhhhx.mbgl.entity.DoctorDTO;
 import com.hhhhhx.mbgl.entity.User;
 import com.hhhhhx.mbgl.entity.enums.RoleEnum;
 import com.hhhhhx.mbgl.entity.result.RestResponse;
@@ -15,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  * <p>
@@ -29,82 +30,24 @@ import org.springframework.stereotype.Controller;
 public class DoctorController {
 
     @Autowired
-    private IUserService userService;
-
-    @Autowired
     private IDoctorService doctorService;
 
     @GetMapping("/page/list")
-    public RestResponse pageList(DoctorPageVM model) {
+    public RestResponse<IPage<DoctorDTO>> pageList(DoctorPageVM param) {
 
-        Page page = null;
-
-        System.out.println(StrUtil.isNotEmpty(model.getKey()));
-
-        if(model.getPatientUserId() != null) {
-
-            page = doctorService.pageDoctorOfPatient(model);
-
-        } else  {
-
-            page = doctorService.pageDoctor(model);
-        }
-
-        return RestResponse.ok(page);
-    }
-
-
-
-
-    @GetMapping("/get/{id}")
-    public RestResponse get(@PathVariable Integer id) {
-
-        if(id == null) {
-            return RestResponse.fail();
-        }
-
-        Doctor doctor = doctorService.getById(id);
-
-        if(doctor == null) {
-            return RestResponse.fail();
-        }
-
-        return RestResponse.ok(doctor);
+        return RestResponse.ok(doctorService.pageDoctorByParm(param));
     }
 
     @GetMapping("/user/{userId}")
-    public RestResponse getById(@PathVariable Integer userId) {
+    public RestResponse getById(@PathVariable @NotNull Integer userId) {
 
-        if(userId == null) {
-            return RestResponse.fail();
-        }
-
-        User user = userService.getById(userId);
-
-        if(!user.getRoleId().equals(RoleEnum.DOCTOR.getCode())) {
-            return RestResponse.fail("用户不是患者");
-        }
-        Doctor doctor = doctorService.getDoctorByUserId(userId);
-
-        if(doctor == null) {
-            return RestResponse.fail("暂无信息");
-        }
-        return RestResponse.ok(doctor);
+        return RestResponse.ok(doctorService.getDoctorByUserId(userId));
     }
 
     @PostMapping("/update")
-    public RestResponse update(@RequestBody Doctor doctor) {
+    public RestResponse update(@RequestBody @Valid DoctorDTO doctor) {
 
-        if(doctor.getUserId() == null) {
-            return RestResponse.fail();
-        }
 
-        boolean ok = doctorService.updateByUserId(doctor);
-
-        if (!ok) {
-            return RestResponse.fail();
-        }
-
-        return RestResponse.ok();
+        return RestResponse.ok(doctorService.updateByUserId(doctor));
     }
 }

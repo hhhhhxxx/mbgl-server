@@ -5,12 +5,15 @@ import cn.hutool.core.bean.BeanUtil;
 import com.hhhhhx.mbgl.dto.UserDTO;
 import com.hhhhhx.mbgl.entity.User;
 import com.hhhhhx.mbgl.entity.result.RestResponse;
-import com.hhhhhx.mbgl.param.UserLoginVM;
+import com.hhhhhx.mbgl.param.UserLoginParam;
 import com.hhhhhx.mbgl.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
+
+import javax.validation.Valid;
 
 /**
  * <p>
@@ -28,15 +31,7 @@ public class UserController {
     private IUserService userService;
 
     @PostMapping("/login")
-    public RestResponse login(@RequestBody UserLoginVM model) {
-
-        User login = userService.login(model);
-
-        if (login == null) {
-            return RestResponse.fail();
-        }
-
-        UserDTO userDTO = BeanUtil.toBean(login, UserDTO.class);
-        return RestResponse.ok(userDTO);
+    public RestResponse<UserDTO> login(@Valid @RequestBody UserLoginParam param) {
+        return RestResponse.ok(userService.login(param));
     }
 }

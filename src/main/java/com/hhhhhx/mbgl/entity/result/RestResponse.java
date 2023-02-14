@@ -2,13 +2,12 @@ package com.hhhhhx.mbgl.entity.result;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hhhhhx.mbgl.base.SystemCode;
-import com.hhhhhx.mbgl.exception.ErrorType;
-import com.hhhhhx.mbgl.exception.SystemErrorType;
+import com.hhhhhx.mbgl.massage.EnumClass;
+import com.hhhhhx.mbgl.massage.value.SystemValue;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @version 1.0.0
@@ -21,91 +20,66 @@ public class RestResponse<T> {
     // 响应码
     private Integer code;
     private String message;
-    private T response;
+    private T data;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date time;
+    private LocalDateTime time;
 
     // 构造函数
     public RestResponse() {
-        this.time = new Date();
+        this.time = LocalDateTime.now();
     }
 
     public RestResponse(Integer code, String message) {
         this.code = code;
         this.message = message;
-        this.time = new Date();
     }
 
-    public RestResponse(Integer code, String message, T response) {
-        this.code = code;
-        this.message = message;
-        this.response = response;
-        this.time = new Date();
+    public RestResponse(Integer code, String message, T data) {
+        this(code,message);
+        this.data = data;
     }
 
-
-    public static RestResponse ok() {
-        SystemCode systemCode = SystemCode.OK;
-        return new RestResponse<>(systemCode.getCode(), systemCode.getMessage());
-    }
-
-    public static <F> RestResponse<F> ok(F response) {
-        SystemCode systemCode = SystemCode.OK;
-        return new RestResponse<F>(systemCode.getCode(), systemCode.getMessage(), response);
+    public RestResponse(EnumClass enumClass) {
+        this(enumClass.getCode(),enumClass.getMassage());
     }
 
 
-
-    // 失败的构造
-    public RestResponse(ErrorType errorType, T data) {
-        this.code = errorType.getCode();
-        this.message = errorType.getMessage();
-        this.response = data;
-        this.time = new Date();
+    public static <T> RestResponse<T> ok() {
+        return new RestResponse<T>(SystemValue.OK);
     }
 
-    public static RestResponse fail(Integer code, String msg) {
-        return new RestResponse(code, msg);
+    public static <T> RestResponse<T> ok(T data) {
+        return new RestResponse<T>(SystemValue.OK).setData(data);
     }
 
-    /**
-     * 系统异常类没有返回数据
-     *
-     * @return Result
-     */
-    public static RestResponse fail() {
-        return new RestResponse(SystemErrorType.SYSTEM_ERROR,null);
+    public static <T> RestResponse<T> ok(EnumClass enumClass) {
+        return new RestResponse<T>(enumClass);
+    }
+
+    public static <T> RestResponse<T> ok(EnumClass enumClass,T data) {
+        return new RestResponse<T>(enumClass).setData(data);
     }
 
 
-
-    // 下面三个是一起的
-    public static RestResponse fail(ErrorType errorType, Object data) {
-        return new RestResponse(errorType, data);
-    }
-    /**
-     * 系统异常类并返回结果数据
-     *
-     * @param errorType
-     * @return Result
-     */
-    public static RestResponse fail(ErrorType errorType) {
-        return RestResponse.fail(errorType, null);
-    }
-    /**
-     * 系统异常类并返回结果数据
-     *
-     * @param data
-     * @return Result
-     */
-    public static RestResponse fail(Object data) {
-        return RestResponse.fail(SystemErrorType.SYSTEM_ERROR, data);
+    public static <T> RestResponse<T> fail(T data) {
+        return new RestResponse<T>(SystemValue.FAIL).setData(data);
     }
 
-    // ------------------------------------------------------------------
+    public static <T> RestResponse<T> fail() {
+        return new RestResponse<T>(SystemValue.FAIL);
+    }
+
+    public static <T> RestResponse<T> fail(EnumClass enumClass) {
+        return new RestResponse<T>(enumClass);
+    }
+
+    public static <T> RestResponse<T> fail(EnumClass enumClass,T data) {
+        return new RestResponse<T>(enumClass).setData(data);
+    }
+
 
     @JsonIgnore
     public boolean isOk() {
-        return SystemCode.OK.getCode().equals(this.code);
+        return SystemValue.OK.getCode().equals(this.code);
     }
 }

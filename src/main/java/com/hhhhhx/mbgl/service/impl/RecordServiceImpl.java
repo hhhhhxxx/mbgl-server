@@ -20,7 +20,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -84,11 +86,13 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
         Page<Record> page = new Page<>(model.getPageIndex(), model.getPageSize());
 
         page = this.lambdaQuery().eq(Record::getPatientUserId, model.getPatientUserId())
-                .eq(Record::getDataId, model.getType()).orderBy(true, true, Record::getTime)
+                .eq(Record::getDataId, model.getType()).orderBy(true, false, Record::getTime)
                 .page(page);
 
 
-        List<Record> records = page.getRecords();
+        List<Record> records_old = page.getRecords();
+
+        List<Record> records = records_old.stream().sorted(Comparator.comparing(Record::getTime)).collect(Collectors.toList());
 
         RecordWeekData recordWeekData = new RecordWeekData();
         List<String> x = new ArrayList<>();

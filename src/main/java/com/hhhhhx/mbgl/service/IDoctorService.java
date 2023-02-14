@@ -1,9 +1,12 @@
 package com.hhhhhx.mbgl.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.hhhhhx.mbgl.entity.Doctor;
+import com.hhhhhx.mbgl.dto.PatientDTO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hhhhhx.mbgl.entity.DoctorDTO;
 import com.hhhhhx.mbgl.param.doctor.DoctorPageVM;
+import com.hhhhhx.mbgl.param.patient.PatientPageVM;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -14,15 +17,12 @@ import org.springframework.transaction.annotation.Transactional;
  * @author hhx
  * @since 2022-09-17
  */
-public interface IDoctorService extends IService<Doctor> {
+public interface IDoctorService {
 
 
-    Doctor getDoctorByUserId(Integer userId);
+    DoctorDTO getDoctorByUserId(Integer userId);
 
-    @Transactional
-    boolean updateByUserId(Doctor doctor);
+    Boolean updateByUserId(DoctorDTO doctor);
 
-    Page pageDoctorOfPatient(DoctorPageVM model);
-
-    Page pageDoctor(DoctorPageVM model);
+    IPage<DoctorDTO> pageDoctorByParm(DoctorPageVM param);
 }

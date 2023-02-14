@@ -92,7 +92,7 @@ public class MbglApplicationTests {
         WxDecodeUtil.decryptWxDataOfHutool(sessionKey, encryptedData, iv);
     }
 
-
+    /*代码生成器*/
     @Test
     public void mybatis() {
         FastAutoGenerator.create("jdbc:mysql://localhost:3306/mbgl?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai", "root", "123456")

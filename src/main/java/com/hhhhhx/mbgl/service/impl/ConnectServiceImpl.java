@@ -1,13 +1,14 @@
 package com.hhhhhx.mbgl.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.hhhhhx.mbgl.dto.PatientDTO;
 import com.hhhhhx.mbgl.entity.Connect;
-import com.hhhhhx.mbgl.entity.Doctor;
-import com.hhhhhx.mbgl.entity.Message;
-import com.hhhhhx.mbgl.entity.Patient;
+import com.hhhhhx.mbgl.entity.DoctorDTO;
 import com.hhhhhx.mbgl.entity.enums.ConnectState;
+import com.hhhhhx.mbgl.exception.MbglServiceException;
 import com.hhhhhx.mbgl.mapper.ConnectMapper;
+import com.hhhhhx.mbgl.massage.value.ConnectValue;
+import com.hhhhhx.mbgl.massage.value.UserValue;
 import com.hhhhhx.mbgl.param.connect.ConnectApplyVM;
 import com.hhhhhx.mbgl.service.IConnectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -16,7 +17,6 @@ import com.hhhhhx.mbgl.service.INoticeService;
 import com.hhhhhx.mbgl.service.IPatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -37,44 +37,39 @@ public class ConnectServiceImpl extends ServiceImpl<ConnectMapper, Connect> impl
     IPatientService patientService;
 
     @Override
-    public boolean apply(ConnectApplyVM model) {
+    public Boolean apply(ConnectApplyVM model) {
 
-        Integer patientUserId = model.getPatientUserId();
-        Integer doctorId = model.getDoctorId();
-        Doctor doctor = doctorService.getById(doctorId);
 
-        if (doctor == null) {
-            return false;
+        PatientDTO patient = patientService.getPatientByUserId(model.getPatientUserId(););
+        DoctorDTO doctor = doctorService.getDoctorByUserId(model.getDoctorId(););
+
+        if(patient == null && doctor == null) {
+            throw new MbglServiceException(UserValue.ROLE_ERROR);
         }
-        Integer doctorUserId = doctor.getUserId();
 
 
 
-        Connect oldConnect = this.getConnectByDoubleId(patientUserId, doctorUserId);
+        Connect oldConnect = this.getConnectByDoubleId(patient.getId(), doctor.getId());
 
         // 已经有了 就不要重复
         if(oldConnect != null) {
-            return false;
+            throw new MbglServiceException(ConnectValue.HAS_OLD);
         }
 
         Connect connect = new Connect();
-        connect.setPatientUserId(patientUserId);
-        connect.setDoctorUserId(doctorUserId);
+        connect.setPatientUserId(patient.getId());
+        connect.setDoctorUserId(doctor.getId());
         connect.setState(ConnectState.APPLY.getCode());
 
         boolean save = this.save(connect);
 
-
-        // 发通知
-        Patient patient = patientService.getPatientByUserId(patientUserId);
-
-        noticeService.sendApplyConnect(doctorUserId,patient);
+        noticeService.sendApplyConnect(doctor.getId(),patient);
 
         return save;
     }
 
     @Override
-    public boolean confirm(Connect connect) {
+    public Boolean confirm(Connect connect) {
 
         return this.lambdaUpdate()
                 .eq(Connect::getPatientUserId, connect.getPatientUserId())
@@ -83,7 +78,7 @@ public class ConnectServiceImpl extends ServiceImpl<ConnectMapper, Connect> impl
     }
 
     @Override
-    public boolean refuse(Connect connect) {
+    public Boolean refuse(Connect connect) {
 
         LambdaQueryWrapper<Connect> query =  new LambdaQueryWrapper<>();
 
@@ -94,13 +89,16 @@ public class ConnectServiceImpl extends ServiceImpl<ConnectMapper, Connect> impl
     }
 
     @Override
-    public boolean disconnect(ConnectApplyVM model) {
+    public Boolean disconnect(ConnectApplyVM model) {
 
-        Doctor doctor = doctorService.getById(model.getDoctorId());
+
+        PatientDTO patient = patientService.getPatientByUserId(model.getPatientUserId());
+        DoctorDTO doctor = doctorService.getDoctorByUserId(model.getDoctorId());
+
 
         Connect connect = new Connect();
-        connect.setPatientUserId(model.getPatientUserId());
-        connect.setDoctorUserId(doctor.getUserId());
+        connect.setPatientUserId(patient.getId());
+        connect.setDoctorUserId(doctor.getId());
 
         return this.refuse(connect);
     }

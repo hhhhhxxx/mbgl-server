@@ -7,4 +7,5 @@ public class UserDTO {
     private Integer id;
     private String username;
     private Integer roleId;
+    private String image;
 }

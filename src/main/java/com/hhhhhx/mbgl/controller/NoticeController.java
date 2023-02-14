@@ -9,9 +9,12 @@ import com.hhhhhx.mbgl.param.notice.NoticeOptionVM;
 import com.hhhhhx.mbgl.param.notice.NoticePageVM;
 import com.hhhhhx.mbgl.service.INoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
+
+import javax.validation.Valid;
 
 /**
  * <p>
@@ -29,7 +32,7 @@ public class NoticeController {
     INoticeService noticeService;
 
     @GetMapping("/page/list")
-    public RestResponse getNoticeByUserId(NoticePageVM model) {
+    public RestResponse getNoticeByUserId(@Valid NoticePageVM model) {
 
         Page<Notice> page = noticeService.pageList(model);
 
