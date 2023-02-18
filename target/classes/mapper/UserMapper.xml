@@ -2,4 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hhhhhx.mbgl.mapper.UserMapper">
 
+    <select id="getPatientOfDoctor" resultType="User">
+        select p.id,p.name,p.age,p.sex,p.phone,p.address,p.history,p.allergy,p.image from mbgl.t_user p
+        inner join mbgl.t_connect c on c.patient_user_id = p.id
+        <where>
+            <if test="true">
+                and p.role_id = 1 and c.doctor_user_id = #{doctor_user_id} and c.state = 1
+            </if>
+            <if test="key != null and key != ''">
+                and p.name like concat('%',#{key},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getDoctorOfPatient" resultType="User">
+
+        select d.id,d.name,d.sex,d.phone,d.room,d.job_year,d.phone,d.hospital from mbgl.t_user d
+        inner join mbgl.t_connect c on c.doctor_user_id = d.id
+        <where>
+            <if test="true">
+                and d.role_id = 2 and c.patient_user_id = #{patient_user_id} and c.state = 1
+            </if>
+            <if test="key != null and key != ''">
+                and d.name like concat('%',#{key},'%')
+                and d.room like concat('%',#{key},'%')
+            </if>
+        </where>
+    </select>
+
 </mapper>

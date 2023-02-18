@@ -5,11 +5,10 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.hhhhhx.mbgl.entity.DoctorDTO;
+import com.hhhhhx.mbgl.dto.DoctorDTO;
 import com.hhhhhx.mbgl.entity.User;
 import com.hhhhhx.mbgl.entity.enums.RoleEnum;
 import com.hhhhhx.mbgl.exception.MbglServiceException;
-import com.hhhhhx.mbgl.mapper.DoctorMapper;
 import com.hhhhhx.mbgl.massage.value.SystemValue;
 import com.hhhhhx.mbgl.massage.value.UserValue;
 import com.hhhhhx.mbgl.param.doctor.DoctorPageVM;
@@ -37,7 +36,7 @@ public class DoctorServiceImpl implements IDoctorService {
 
         User user = userService.lambdaQuery()
                 .eq(User::getId, userId)
-                .eq(User::getRoleId, RoleEnum.DOCTOR)
+                .eq(User::getRoleId, RoleEnum.DOCTOR.getCode())
                 .one();
 
         if (user == null) throw new MbglServiceException(SystemValue.SELECT_FAIL);
@@ -82,12 +81,14 @@ public class DoctorServiceImpl implements IDoctorService {
 
             LambdaQueryWrapper<User> query = new LambdaQueryWrapper<>();
 
+            query.eq(User::getRoleId, RoleEnum.DOCTOR.getCode());
+
             if (StrUtil.isNotBlank(param.getKey())) {
                 // 条件判断写外面 不然报错
                 query.and(item ->
-                        item.like(User::getName, param.getKey())
-                                .or()
-                                .like(User::getRoom, param.getKey()));
+                                item.like(User::getName, param.getKey())
+                                        .or()
+                                        .like(User::getRoom, param.getKey()));
             }
 
             page = userService.page(userPage, query)

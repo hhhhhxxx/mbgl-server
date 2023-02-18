@@ -17,7 +17,6 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
         if (!StringUtils.isEmpty(token)) {
             return true;
         } else {
-            response.setHeader("loginStatus","false");
             return false;
         }
     }

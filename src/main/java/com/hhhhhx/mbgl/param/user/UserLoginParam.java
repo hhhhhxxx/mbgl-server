@@ -1,6 +1,6 @@
-package com.hhhhhx.mbgl.param;
+package com.hhhhhx.mbgl.param.user;
 
-import com.hhhhhx.mbgl.massage.ParamMessage;
+
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 

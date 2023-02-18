@@ -30,8 +30,8 @@ public class WxRunService {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-    public boolean sessionkey(Integer userId, String code) {
 
+    public WxJscode2sessionResult getSessionKeyAndOpenId(String code) {
         String url = "https://api.weixin.qq.com/sns/jscode2session?appid={appid}&secret={secret}&js_code={js_code}&grant_type=authorization_code";
 
         Map<String, String> params = new HashMap<String, String>();
@@ -43,12 +43,21 @@ public class WxRunService {
         ResponseEntity<String> response = HttpUtil.get(url, params);
 
         if (!response.getStatusCode().equals(HttpStatus.OK)) {
-            return false;
+            return null;
         }
 
         String body = response.getBody();
         JSONObject jsonObject = JSONUtil.parseObj(body);
-        WxJscode2sessionResult result = JSONUtil.toBean(jsonObject, WxJscode2sessionResult.class);
+        return JSONUtil.toBean(jsonObject, WxJscode2sessionResult.class);
+    }
+
+    public boolean sessionkey(Integer userId, String code) {
+
+        WxJscode2sessionResult result = this.getSessionKeyAndOpenId(code);
+
+        if (result == null) {
+            return false;
+        }
 
         stringRedisTemplate.opsForValue()
                 .set(RedisConstant.USER_PREFIX + userId, JSONUtil.toJsonStr(result), 3L,TimeUnit.DAYS);

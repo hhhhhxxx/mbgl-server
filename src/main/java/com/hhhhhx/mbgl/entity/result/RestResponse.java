@@ -30,6 +30,7 @@ public class RestResponse<T> {
     }
 
     public RestResponse(Integer code, String message) {
+        this();
         this.code = code;
         this.message = message;
     }
@@ -40,7 +41,7 @@ public class RestResponse<T> {
     }
 
     public RestResponse(EnumClass enumClass) {
-        this(enumClass.getCode(),enumClass.getMassage());
+        this(enumClass.getCode(),enumClass.getMessage());
     }
 
 
@@ -60,6 +61,11 @@ public class RestResponse<T> {
         return new RestResponse<T>(enumClass).setData(data);
     }
 
+    public static <Object> RestResponse<Object> ok(Integer code, String message) {
+        return new RestResponse<Object>(code,message);
+    }
+
+
 
     public static <T> RestResponse<T> fail(T data) {
         return new RestResponse<T>(SystemValue.FAIL).setData(data);
@@ -77,9 +83,7 @@ public class RestResponse<T> {
         return new RestResponse<T>(enumClass).setData(data);
     }
 
-
-    @JsonIgnore
-    public boolean isOk() {
-        return SystemValue.OK.getCode().equals(this.code);
+    public static <Object> RestResponse<Object> fail(Integer code, String message) {
+        return new RestResponse<Object>(code,message);
     }
 }

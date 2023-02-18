@@ -1,9 +1,8 @@
 package com.hhhhhx.mbgl.mapper;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hhhhhx.mbgl.dto.PatientDTO;
-import com.hhhhhx.mbgl.entity.DoctorDTO;
+import com.hhhhhx.mbgl.dto.DoctorDTO;
 import com.hhhhhx.mbgl.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;

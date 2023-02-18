@@ -1,8 +1,8 @@
 package com.hhhhhx.mbgl.entity.factory;
 
-import com.hhhhhx.mbgl.entity.Doctor;
+import com.hhhhhx.mbgl.dto.PatientDTO;
+import com.hhhhhx.mbgl.dto.DoctorDTO;
 import com.hhhhhx.mbgl.entity.Notice;
-import com.hhhhhx.mbgl.entity.Patient;
 import com.hhhhhx.mbgl.entity.enums.NoticeOption;
 import com.hhhhhx.mbgl.entity.enums.NoticeState;
 import com.hhhhhx.mbgl.entity.enums.NoticeType;
@@ -11,7 +11,9 @@ import java.time.LocalDateTime;
 
 public class ConnectNoticeFactory {
 
-    public static Notice getApplyNotice(Integer doctorUserId, Patient patient) {
+
+
+    public static Notice getApplyNotice(Integer doctorUserId, PatientDTO patient) {
 
         Notice notice = init();
 
@@ -22,12 +24,12 @@ public class ConnectNoticeFactory {
 
         notice.setContent("患者("+patient.getName()+")申请与您绑定，同意后查看该患者的具体信息");
 
-        notice.setAttachment(patient.getUserId().toString());
+        notice.setAttachment(patient.getId().toString());
 
         return notice;
     }
 
-    public static Notice getRefuseNotice(Integer patientUserId, Doctor doctor) {
+    public static Notice getRefuseNotice(Integer patientUserId, DoctorDTO doctor) {
 
         Notice notice = init();
 
@@ -42,7 +44,7 @@ public class ConnectNoticeFactory {
         return notice;
     }
 
-    public static Notice getConfirmNotice(Integer patientUserId, Doctor doctor) {
+    public static Notice getConfirmNotice(Integer patientUserId, DoctorDTO doctor) {
 
         Notice notice = init();
 

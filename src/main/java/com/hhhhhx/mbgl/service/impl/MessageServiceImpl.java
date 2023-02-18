@@ -4,7 +4,6 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.hhhhhx.mbgl.entity.Doctor;
 import com.hhhhhx.mbgl.entity.Message;
 import com.hhhhhx.mbgl.mapper.MessageMapper;
 import com.hhhhhx.mbgl.param.msg.MessageListVM;

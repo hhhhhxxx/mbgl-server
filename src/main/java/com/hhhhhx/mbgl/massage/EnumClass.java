@@ -1,22 +1,20 @@
 package com.hhhhhx.mbgl.massage;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
+@Builder
+@AllArgsConstructor
 public class EnumClass {
 
     Integer code;
-    String massage;
+    String message;
 
-    public EnumClass(Integer code, String massage) {
-        this.code = code;
-        this.massage = massage;
+    public static EnumClass create(Integer code, String message) {
+        return EnumClass.builder().code(code).message(message).build();
     }
-
-    public static EnumClass bulid(Integer code, String massage) {
-        return new EnumClass(code,massage);
-    }
-
 }

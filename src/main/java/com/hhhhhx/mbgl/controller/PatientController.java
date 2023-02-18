@@ -5,7 +5,6 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hhhhhx.mbgl.dto.PatientDTO;
-import com.hhhhhx.mbgl.entity.Doctor;
 import com.hhhhhx.mbgl.entity.User;
 import com.hhhhhx.mbgl.entity.enums.RoleEnum;
 import com.hhhhhx.mbgl.entity.result.RestResponse;

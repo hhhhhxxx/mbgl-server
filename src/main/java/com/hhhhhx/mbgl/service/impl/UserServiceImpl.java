@@ -5,17 +5,23 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hhhhhx.mbgl.dto.PatientDTO;
 import com.hhhhhx.mbgl.dto.UserDTO;
-import com.hhhhhx.mbgl.entity.DoctorDTO;
+import com.hhhhhx.mbgl.dto.DoctorDTO;
 import com.hhhhhx.mbgl.entity.User;
+import com.hhhhhx.mbgl.entity.wx.WxJscode2sessionResult;
 import com.hhhhhx.mbgl.exception.MbglServiceException;
 import com.hhhhhx.mbgl.mapper.UserMapper;
 import com.hhhhhx.mbgl.massage.value.LoginValue;
-import com.hhhhhx.mbgl.param.UserLoginParam;
+import com.hhhhhx.mbgl.param.user.UserLoginParam;
 import com.hhhhhx.mbgl.param.doctor.DoctorPageVM;
 import com.hhhhhx.mbgl.param.patient.PatientPageVM;
+import com.hhhhhx.mbgl.param.user.UserUploadImageParam;
+import com.hhhhhx.mbgl.param.user.UserWeixinLoginParam;
 import com.hhhhhx.mbgl.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hhhhhx.mbgl.service.other.WxRunService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -28,6 +34,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
+    @Autowired
+    WxRunService wxRunService;
+
     @Override
     public UserDTO login(UserLoginParam model) {
         User queryUser = this.getUserByUsername(model.getUsername());
@@ -35,6 +44,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if(queryUser != null && queryUser.getPassword().equals(model.getPassword())) {
 
             UserDTO userDTO = BeanUtil.toBean(queryUser, UserDTO.class);
+            return userDTO;
+        } else {
+            throw new MbglServiceException(LoginValue.INPUT_ERROR);
+        }
+    }
+
+    @Override
+    public UserDTO wxLogin(UserWeixinLoginParam param) {
+
+        WxJscode2sessionResult sessionKeyAndOpenId = wxRunService.getSessionKeyAndOpenId(param.getCode());
+
+        String openid = sessionKeyAndOpenId.getOpenid();
+
+        User user = this.lambdaQuery().eq(User::getOpenId, openid).one();
+
+        if(user != null) {
+            UserDTO userDTO = BeanUtil.toBean(user, UserDTO.class);
             return userDTO;
         } else {
             throw new MbglServiceException(LoginValue.NO_USER);
@@ -65,5 +91,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         return this.baseMapper.getDoctorOfPatient(page, param.getPatientUserId(), param.getKey());
 
+    }
+
+    @Override
+    @Transactional
+    public Boolean upLoadImage(UserUploadImageParam param) {
+
+        return this.lambdaUpdate().eq(User::getId,param.getId()).set(User::getImage,param.getImage()).update();
     }
 }

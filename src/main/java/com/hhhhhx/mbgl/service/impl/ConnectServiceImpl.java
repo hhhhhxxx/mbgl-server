@@ -3,7 +3,7 @@ package com.hhhhhx.mbgl.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.hhhhhx.mbgl.dto.PatientDTO;
 import com.hhhhhx.mbgl.entity.Connect;
-import com.hhhhhx.mbgl.entity.DoctorDTO;
+import com.hhhhhx.mbgl.dto.DoctorDTO;
 import com.hhhhhx.mbgl.entity.enums.ConnectState;
 import com.hhhhhx.mbgl.exception.MbglServiceException;
 import com.hhhhhx.mbgl.mapper.ConnectMapper;
@@ -40,8 +40,8 @@ public class ConnectServiceImpl extends ServiceImpl<ConnectMapper, Connect> impl
     public Boolean apply(ConnectApplyVM model) {
 
 
-        PatientDTO patient = patientService.getPatientByUserId(model.getPatientUserId(););
-        DoctorDTO doctor = doctorService.getDoctorByUserId(model.getDoctorId(););
+        PatientDTO patient = patientService.getPatientByUserId(model.getPatientUserId());
+        DoctorDTO doctor = doctorService.getDoctorByUserId(model.getDoctorId());
 
         if(patient == null && doctor == null) {
             throw new MbglServiceException(UserValue.ROLE_ERROR);
@@ -56,6 +56,7 @@ public class ConnectServiceImpl extends ServiceImpl<ConnectMapper, Connect> impl
             throw new MbglServiceException(ConnectValue.HAS_OLD);
         }
 
+        /*新建拦截*/
         Connect connect = new Connect();
         connect.setPatientUserId(patient.getId());
         connect.setDoctorUserId(doctor.getId());
@@ -63,7 +64,7 @@ public class ConnectServiceImpl extends ServiceImpl<ConnectMapper, Connect> impl
 
         boolean save = this.save(connect);
 
-        noticeService.sendApplyConnect(doctor.getId(),patient);
+        noticeService.sendApplyConnect(doctor.getId(),patient.getId());
 
         return save;
     }

@@ -1,4 +1,4 @@
-package com.hhhhhx.mbgl.entity;
+package com.hhhhhx.mbgl.dto;
 
 import lombok.Data;
 
@@ -27,7 +27,7 @@ public class DoctorDTO implements Serializable {
 
     private Integer sex;
 
-    private Integer phone;
+    private String phone;
 
     private String room;
 

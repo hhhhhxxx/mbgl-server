@@ -1,7 +1,6 @@
 package com.hhhhhx.mbgl.param.connect;
 
 import lombok.Data;
-
 import javax.validation.constraints.NotNull;
 
 @Data

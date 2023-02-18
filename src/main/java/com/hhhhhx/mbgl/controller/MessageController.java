@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class  MessageController {
     private IMessageService messageService;
 
     @PostMapping("/send")
-    public RestResponse send(@RequestBody MessageSendVM model) {
+    public RestResponse send(@RequestBody @Valid MessageSendVM model) {
 
         boolean ok = messageService.send(model);
 
@@ -44,7 +45,7 @@ public class  MessageController {
     }
 
     @PostMapping("/getBefore")
-    public RestResponse getBefore(@RequestBody MessageListVM model) {
+    public RestResponse getBefore(@RequestBody @Valid MessageListVM model) {
 
         if(model.getTargetTime() == null) {
             model.setTargetTime(LocalDateTime.now());
@@ -56,7 +57,7 @@ public class  MessageController {
     }
 
     @PostMapping("/getAfter")
-    public RestResponse getAfter(@RequestBody MessageListVM model) {
+    public RestResponse getAfter(@RequestBody @Valid MessageListVM model) {
 
         if(model.getTargetTime() == null) {
             model.setTargetTime(LocalDateTime.now());

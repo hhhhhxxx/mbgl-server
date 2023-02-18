@@ -2,17 +2,12 @@ package com.hhhhhx.mbgl.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.hhhhhx.mbgl.entity.DoctorDTO;
-import com.hhhhhx.mbgl.entity.User;
-import com.hhhhhx.mbgl.entity.enums.RoleEnum;
+import com.hhhhhx.mbgl.dto.DoctorDTO;
 import com.hhhhhx.mbgl.entity.result.RestResponse;
 import com.hhhhhx.mbgl.param.doctor.DoctorPageVM;
 import com.hhhhhx.mbgl.service.IDoctorService;
-import com.hhhhhx.mbgl.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.stereotype.Controller;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

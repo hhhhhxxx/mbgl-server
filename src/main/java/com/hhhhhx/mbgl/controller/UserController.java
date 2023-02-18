@@ -1,17 +1,14 @@
 package com.hhhhhx.mbgl.controller;
 
 
-import cn.hutool.core.bean.BeanUtil;
 import com.hhhhhx.mbgl.dto.UserDTO;
-import com.hhhhhx.mbgl.entity.User;
 import com.hhhhhx.mbgl.entity.result.RestResponse;
-import com.hhhhhx.mbgl.param.UserLoginParam;
+import com.hhhhhx.mbgl.param.user.UserLoginParam;
+import com.hhhhhx.mbgl.param.user.UserUploadImageParam;
+import com.hhhhhx.mbgl.param.user.UserWeixinLoginParam;
 import com.hhhhhx.mbgl.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.stereotype.Controller;
 
 import javax.validation.Valid;
 
@@ -33,5 +30,15 @@ public class UserController {
     @PostMapping("/login")
     public RestResponse<UserDTO> login(@Valid @RequestBody UserLoginParam param) {
         return RestResponse.ok(userService.login(param));
+    }
+
+    @PostMapping("/wx/login")
+    public RestResponse<UserDTO> wxLogin(@Valid @RequestBody UserWeixinLoginParam param) {
+        return RestResponse.ok(userService.wxLogin(param));
+    }
+
+    @PostMapping("/upload/image")
+    public RestResponse<Boolean> login(@Valid @RequestBody UserUploadImageParam param) {
+        return RestResponse.ok(userService.upLoadImage(param));
     }
 }

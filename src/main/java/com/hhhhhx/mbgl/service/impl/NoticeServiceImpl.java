@@ -1,13 +1,12 @@
 package com.hhhhhx.mbgl.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hhhhhx.mbgl.dto.PatientDTO;
 import com.hhhhhx.mbgl.entity.Connect;
-import com.hhhhhx.mbgl.entity.Doctor;
+import com.hhhhhx.mbgl.dto.DoctorDTO;
 import com.hhhhhx.mbgl.entity.Notice;
-import com.hhhhhx.mbgl.entity.Patient;
 import com.hhhhhx.mbgl.entity.enums.ConnectState;
 import com.hhhhhx.mbgl.entity.enums.NoticeOption;
-import com.hhhhhx.mbgl.entity.enums.NoticeState;
 import com.hhhhhx.mbgl.entity.enums.NoticeType;
 import com.hhhhhx.mbgl.entity.factory.ConnectNoticeFactory;
 import com.hhhhhx.mbgl.mapper.NoticeMapper;
@@ -18,7 +17,6 @@ import com.hhhhhx.mbgl.service.IDoctorService;
 import com.hhhhhx.mbgl.service.INoticeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hhhhhx.mbgl.service.IPatientService;
-import org.springframework.beans.factory.InjectionPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +41,9 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
     IConnectService connectService;
 
     @Override
-    public boolean sendApplyConnect(Integer doctorUserId, Patient patient) {
+    public boolean sendApplyConnect(Integer doctorUserId, Integer patientUserId) {
+
+        PatientDTO patient = patientService.getPatientByUserId(patientUserId);
 
         Notice applyNotice = ConnectNoticeFactory.getApplyNotice(doctorUserId, patient);
 
@@ -125,7 +125,7 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
 
 
             // 发送同意的通知
-            Doctor doctor = doctorService.getDoctorByUserId(doctorUserId);
+            DoctorDTO doctor = doctorService.getDoctorByUserId(doctorUserId);
 
             Notice refuseNotice = ConnectNoticeFactory.getConfirmNotice(patientUserId, doctor);
 
@@ -147,7 +147,7 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
             connectService.refuse(connect);
 
             // 发送同意的通知
-            Doctor doctor = doctorService.getDoctorByUserId(doctorUserId);
+            DoctorDTO doctor = doctorService.getDoctorByUserId(doctorUserId);
 
             Notice refuseNotice = ConnectNoticeFactory.getRefuseNotice(patientUserId, doctor);
 

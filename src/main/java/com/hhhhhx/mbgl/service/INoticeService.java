@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hhhhhx.mbgl.dto.PatientDTO;
 import com.hhhhhx.mbgl.entity.Notice;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.hhhhhx.mbgl.entity.Patient;
 import com.hhhhhx.mbgl.param.notice.NoticeOptionVM;
 import com.hhhhhx.mbgl.param.notice.NoticePageVM;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 2022-09-22
  */
 public interface INoticeService extends IService<Notice> {
-    boolean sendApplyConnect(Integer doctorUserId, PatientDTO patient);
+    boolean sendApplyConnect(Integer doctorUserId, Integer patientUserId);
 
     Page<Notice> pageList(NoticePageVM model);
 

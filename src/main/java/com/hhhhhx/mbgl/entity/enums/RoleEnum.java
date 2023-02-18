@@ -33,7 +33,7 @@ public enum RoleEnum {
         return keyMap.get(code);
     }
 
-    public int getCode() {
+    public Integer getCode() {
         return code;
     }
 

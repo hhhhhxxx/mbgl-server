@@ -62,17 +62,18 @@ public class User implements Serializable {
     /**
      * 患者住址
      */
-    private String patientAddress;
+    private String address;
+
 
     /**
      * 患者病史
      */
-    private String patientHistory;
+    private String history;
 
     /**
      * 患者过敏史
      */
-    private String patientAllergy;
+    private String allergy;
 
     /**
      * 医生科室
@@ -98,4 +99,9 @@ public class User implements Serializable {
      * 头像地址
      */
     private String image;
+
+    /**
+     * 微信唯一id
+     */
+    private String openId;
 }

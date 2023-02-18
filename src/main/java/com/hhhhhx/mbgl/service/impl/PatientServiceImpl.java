@@ -37,7 +37,7 @@ public class PatientServiceImpl implements IPatientService {
 
         User user = userService.lambdaQuery()
                 .eq(User::getId, userId)
-                .eq(User::getRoleId, RoleEnum.PATIENT)
+                .eq(User::getRoleId, RoleEnum.PATIENT.getCode())
                 .one();
 
         if (user == null) throw new MbglServiceException(SystemValue.SELECT_FAIL);
@@ -80,7 +80,8 @@ public class PatientServiceImpl implements IPatientService {
             LambdaQueryWrapper<User> query = new LambdaQueryWrapper<>();
 
             // 日后补充模糊查询
-            query.like(StrUtil.isNotBlank(param.getKey()), User::getName, param.getKey());
+            query.eq(User::getRoleId,RoleEnum.PATIENT.getCode())
+                    .like(StrUtil.isNotBlank(param.getKey()), User::getName, param.getKey());
 
 
             page = userService.page(userPage, query)

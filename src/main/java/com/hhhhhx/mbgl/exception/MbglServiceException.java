@@ -5,28 +5,34 @@ import com.hhhhhx.mbgl.massage.value.SystemValue;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Getter
 @Setter
-public class MbglServiceException extends RuntimeException {
+public class MbglServiceException extends MbglBaseException {
 
-    private EnumClass enumClass;
-    /**
-     * 默认是系统异常
-     */
+    private Integer code;
+    private String message;
+
+
+
     public MbglServiceException(EnumClass enumClass) {
-        super(enumClass.getMassage());
-        this.enumClass = enumClass;
+        this.code = enumClass.getCode() == null ?
+                SystemValue.FAIL.getCode() : enumClass.getCode();
+        this.message = enumClass.getMessage() == null ?
+                SystemValue.FAIL.getMessage() : enumClass.getMessage();
+    }
+
+    public MbglServiceException(EnumClass enumClass, String message) {
+        super(message);
+        this.code = enumClass.getCode() == null ?
+                SystemValue.FAIL.getCode() : enumClass.getCode();
+        this.message = enumClass.getMessage() == null ?
+                SystemValue.FAIL.getMessage() : enumClass.getMessage();
     }
 
     public MbglServiceException() {
-        super(SystemValue.FAIL.getMassage());
-        this.enumClass = SystemValue.FAIL;
-    }
-
-    public MbglServiceException(Integer code,String message) {
-        super(message);
-        EnumClass enumClass = EnumClass.bulid(code, message);
-        this.enumClass = enumClass;
+        this.code = SystemValue.FAIL.getCode();
+        this.message = SystemValue.FAIL.getMessage();
     }
 
 }

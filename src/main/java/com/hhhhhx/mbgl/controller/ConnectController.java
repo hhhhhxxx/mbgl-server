@@ -2,15 +2,13 @@ package com.hhhhhx.mbgl.controller;
 
 
 import com.hhhhhx.mbgl.entity.Connect;
-import com.hhhhhx.mbgl.entity.DoctorDTO;
+import com.hhhhhx.mbgl.dto.DoctorDTO;
 import com.hhhhhx.mbgl.entity.result.RestResponse;
 import com.hhhhhx.mbgl.param.connect.ConnectApplyVM;
 import com.hhhhhx.mbgl.service.IConnectService;
 import com.hhhhhx.mbgl.service.IDoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.stereotype.Controller;
 
 /**
  * <p>
