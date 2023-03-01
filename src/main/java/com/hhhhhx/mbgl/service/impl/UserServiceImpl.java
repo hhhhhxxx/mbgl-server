@@ -19,6 +19,7 @@ import com.hhhhhx.mbgl.param.user.UserWeixinLoginParam;
 import com.hhhhhx.mbgl.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hhhhhx.mbgl.service.other.WxRunService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 2022-09-17
  */
 @Service
+@Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
     @Autowired
@@ -56,6 +58,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         WxJscode2sessionResult sessionKeyAndOpenId = wxRunService.getSessionKeyAndOpenId(param.getCode());
 
         String openid = sessionKeyAndOpenId.getOpenid();
+
+        log.info("openId:{}",openid);
 
         User user = this.lambdaQuery().eq(User::getOpenId, openid).one();
 

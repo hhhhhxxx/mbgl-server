@@ -39,7 +39,12 @@ public class CodeProduct {
                             // .addInclude("t_record")
                             // .addInclude("t_user")
                             // .addInclude("t_notice")
-                            .addInclude("t_user")
+                            // .addInclude("t_user")
+                            .addInclude("t_charge")
+                            .addInclude("t_drug")
+                            .addInclude("t_order")
+                            .addInclude("t_order_item")
+                            .addInclude("t_stock")
                             .addTablePrefix("t_"); // 设置过滤表前缀
                 })
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板

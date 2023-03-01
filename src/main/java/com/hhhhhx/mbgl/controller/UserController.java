@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping("/upload/image")
-    public RestResponse<Boolean> login(@Valid @RequestBody UserUploadImageParam param) {
+    public RestResponse<Boolean> upLoadImage(@Valid @RequestBody UserUploadImageParam param) {
         return RestResponse.ok(userService.upLoadImage(param));
     }
 }

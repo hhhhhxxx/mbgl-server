@@ -10,6 +10,7 @@ import com.hhhhhx.mbgl.param.msg.MessageListVM;
 import com.hhhhhx.mbgl.param.msg.MessageSendVM;
 import com.hhhhhx.mbgl.service.IMessageService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hhhhhx.mbgl.ws.WebSocketService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -41,7 +42,13 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
 
         message.setType(1);
 
-        return this.save(message);
+        if (this.save(message)) {
+            // websocket发消息
+            WebSocketService.sendInfo(message);
+            return true;
+        } else{
+            return false;
+        }
     }
 
     @Override

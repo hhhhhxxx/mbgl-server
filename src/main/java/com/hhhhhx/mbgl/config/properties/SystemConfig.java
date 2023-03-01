@@ -1,4 +1,4 @@
-package com.hhhhhx.mbgl.config;
+package com.hhhhhx.mbgl.config.properties;
 
 import com.hhhhhx.mbgl.config.properties.WxConfig;
 import lombok.Data;

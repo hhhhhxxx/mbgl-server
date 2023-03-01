@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class MessageListVM {
+    @NotNull
     private Integer pageSize;
     @NotNull
     private Integer sendUserId;

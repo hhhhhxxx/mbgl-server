@@ -3,7 +3,7 @@ package com.hhhhhx.mbgl.service.other;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.hhhhhx.mbgl.config.SystemConfig;
+import com.hhhhhx.mbgl.config.properties.SystemConfig;
 import com.hhhhhx.mbgl.entity.wx.WxJscode2sessionResult;
 import com.hhhhhx.mbgl.param.wx.WxDecodeDataVM;
 import com.hhhhhx.mbgl.utils.HttpUtil;

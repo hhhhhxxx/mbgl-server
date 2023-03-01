@@ -56,17 +56,20 @@ public class  MessageController {
         return RestResponse.ok(chatRecord);
     }
 
-    @PostMapping("/getAfter")
-    public RestResponse getAfter(@RequestBody @Valid MessageListVM model) {
-
-        if(model.getTargetTime() == null) {
-            model.setTargetTime(LocalDateTime.now());
-        }
-
-        List<Message> chatRecord = messageService.getAfterChat(model);
-
-        return RestResponse.ok(chatRecord);
-    }
+    // @PostMapping("/getAfter")
+    // public RestResponse getAfter(@RequestBody @Valid MessageListVM model) {
+    //
+    //
+    //     // 使用websocket实时推送
+    //
+    //     // if(model.getTargetTime() == null) {
+    //     //     model.setTargetTime(LocalDateTime.now());
+    //     // }
+    //     //
+    //     // List<Message> chatRecord = messageService.getAfterChat(model);
+    //     //
+    //     // return RestResponse.ok(chatRecord);
+    // }
 
 
     // POST https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=ACCESS_TOKEN

@@ -5,7 +5,7 @@ import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import com.hhhhhx.mbgl.config.SystemConfig;
+import com.hhhhhx.mbgl.config.properties.SystemConfig;
 import com.hhhhhx.mbgl.entity.wx.WxJscode2sessionResult;
 import com.hhhhhx.mbgl.mapper.MessageMapper;
 import com.hhhhhx.mbgl.param.msg.MessageListVM;
