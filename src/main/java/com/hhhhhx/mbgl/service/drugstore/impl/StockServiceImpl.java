@@ -1,6 +1,7 @@
 package com.hhhhhx.mbgl.service.drugstore.impl;
 
-import com.hhhhhx.mbgl.dto.StockDTO;
+import com.hhhhhx.mbgl.dto.StockCombineDTO;
+import com.hhhhhx.mbgl.dto.StockItemWithValueDTO;
 import com.hhhhhx.mbgl.entity.Stock;
 import com.hhhhhx.mbgl.mapper.StockMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -28,24 +29,21 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
     StockMapper stockMapper;
 
     @Override
-    public List<StockDTO> getStockDTOList(List<Integer> drugIds) {
-        return stockMapper.getStockDTOByDrugIds(drugIds);
+    public List<StockCombineDTO> getStockCombineDTOByDrugIds(List<Integer> drugIds) {
+        return stockMapper.getStockCombineDTOByDrugIds(drugIds);
     }
 
     @Override
-    public List<Stock> getStockListByDrugIds(List<Integer> drugIds) {
-        return stockMapper.getStockByDrugIds(drugIds);
+    public List<StockItemWithValueDTO> getStockItemWithValueDTOByDrugIds(List<Integer> drugIds) {
+        return stockMapper.getStockItemWithValueDTOByDrugIds(drugIds);
     }
 
-    // @Override
-    // @Transactional
-    // public int batchUpdate(List<Stock> updateList) {
-    //     return stockMapper.batchUpdate(updateList);
-    // }
-    //
-    // @Override
-    // @Transactional
-    // public int updateTest(List<Stock> updateList) {
-    //     return stockMapper.updateTest(updateList);
-    // };
+    @Override
+    @Transactional
+    public boolean updateManyStock(List<Stock> updateList) {
+
+        int i = stockMapper.updateManyStock(updateList);
+        // 有没有全部更新
+        return i == updateList.size();
+    }
 }

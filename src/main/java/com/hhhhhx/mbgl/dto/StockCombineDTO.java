@@ -4,12 +4,10 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
-
 @Data
 @Setter
 @Getter
-public class StockDTO {
+public class StockCombineDTO {
     private Integer drugId;
     private Integer quantity;
 }

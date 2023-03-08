@@ -3,26 +3,39 @@
 <mapper namespace="com.hhhhhx.mbgl.mapper.StockMapper">
 
 
-    <resultMap id="StockDTOMap" type="com.hhhhhx.mbgl.dto.StockDTO">
+
+    <resultMap id="StockCombineDTOMap" type="com.hhhhhx.mbgl.dto.StockCombineDTO">
         <result column="drug_id" property="drugId" jdbcType="INTEGER"/>
         <result column="quantity" property="quantity" jdbcType="INTEGER"/>
     </resultMap>
 
-    <select id="getStockDTOByDrugIds" resultMap="StockDTOMap">
-        select drug_id, sum(quantity) as quantity from mbgl.t_stock
+
+    <resultMap id="StockItemWithValueDTOMap" type="com.hhhhhx.mbgl.dto.StockItemWithValueDTO">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="version" property="drugId" jdbcType="INTEGER"/>
+        <result column="drug_id" property="drugId" jdbcType="INTEGER"/>
+        <result column="quantity" property="quantity" jdbcType="INTEGER"/>
+        <result column="price" property="price" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+
+    <select id="getStockCombineDTOByDrugIds" resultMap="StockCombineDTOMap">
+        select drug_id, sum(quantity) as quantity from mbgl.t_stock s
         where drug_id in
         <foreach collection="drugIds" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
         and quantity > 0
-        GROUP BY drug_id order by FIELD(drug_id,
+        GROUP BY s.drug_id order by FIELD(drug_id,
         <foreach collection="drugIds" item="item" open="" separator="," close=")">
             #{item}
         </foreach>
     </select>
 
-    <select id="getStockByDrugIds" resultType="Stock">
-        select id,drug_id,quantity,version from mbgl.t_stock
+    <select id="getStockItemWithValueDTOByDrugIds" resultMap="StockItemWithValueDTOMap">
+        select s.id,s.drug_id,s.quantity,s.version,d.price from mbgl.t_stock s
+        inner join mbgl.t_drug d on d.id = s.drug_id
         where drug_id in
         <foreach collection="drugIds" item="item" open="(" separator="," close=")">
             #{item}
@@ -35,21 +48,30 @@
         ,quantity
     </select>
 
-    <update id="batchUpdate">
-        <foreach collection="update_list" item="item" separator=";">
-            update mbgl.t_stock
-            set quantity = quantity - #{item.quantity},
-            version = version + 1
-            where id = #{item.id} and quantity > #{item.quantity}
-        </foreach>
-    </update>
 
-    <update id="updateStockWithVersion">
+    <update id="updateManyStock">
         update mbgl.t_stock
-        set quantity = quantity - #{quantity},
-            version  = version + 1
-        where id = #{id}
-          and quantity > #{quantity}
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix=" quantity = case " suffix="end,">
+                <foreach collection="update_list" item="item">
+                    when id = #{item.id} and quantity >= #{item.quantity}
+                    then quantity - #{item.quantity}
+                </foreach>
+                else quantity
+            </trim>
+            <trim prefix=" version = case " suffix="end">
+                <foreach collection="update_list" item="item">
+                    when id = #{item.id} and quantity >= #{item.quantity}
+                    then version + 1
+                </foreach>
+                else version
+            </trim>
+        </trim>
+        <where>
+            id in
+            <foreach collection="update_list" item="item" open="(" separator="," close=")">
+                #{item.id}
+            </foreach>
+        </where>
     </update>
-    <!--and version = #{version}-->
 </mapper>

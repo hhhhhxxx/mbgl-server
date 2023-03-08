@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public interface IConnectService extends IService<Connect> {
 
+
     Boolean apply(ConnectApplyVM model);
 
     Boolean confirm(Connect connect);

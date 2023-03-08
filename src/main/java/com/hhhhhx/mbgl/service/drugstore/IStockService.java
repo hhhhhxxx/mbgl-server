@@ -1,7 +1,8 @@
 package com.hhhhhx.mbgl.service.drugstore;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.hhhhhx.mbgl.dto.StockDTO;
+import com.hhhhhx.mbgl.dto.StockCombineDTO;
+import com.hhhhhx.mbgl.dto.StockItemWithValueDTO;
 import com.hhhhhx.mbgl.entity.Stock;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -17,12 +18,9 @@ import java.util.List;
  */
 public interface IStockService extends IService<Stock> {
 
+    List<StockCombineDTO> getStockCombineDTOByDrugIds(List<Integer> drugIds);
 
-    List<StockDTO> getStockDTOList(List<Integer> drugIds);
+    List<StockItemWithValueDTO> getStockItemWithValueDTOByDrugIds(List<Integer> drugIds);
 
-    List<Stock> getStockListByDrugIds(List<Integer> drugIds);
-
-    // int batchUpdate(List<Stock> updateList);
-    //
-    // int updateTest(List<Stock> updateList);
+    boolean updateManyStock(List<Stock> updateList);
 }

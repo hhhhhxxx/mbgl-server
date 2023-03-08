@@ -83,9 +83,9 @@ public class OrderServiceTest {
         int sum = 0;
 
         long l = System.currentTimeMillis();
-        // for (int i = 0; i < 1000; i++) {
+        // for (int i = 1; i < 1000; i++) {
+        //     stock1.setId(i);
         //     stocks.add(stock1);
-        //     // sum += stockMapper.updateStockWithVersion(stock1);
         // }
 
         stocks.add(stock1);
@@ -95,14 +95,19 @@ public class OrderServiceTest {
         long l2 = System.currentTimeMillis();
         System.out.println("消耗时间1:" + (l2 - l) / 1000.0);
 
-        // stockMapper.batchUpdate(stocks); 1s
+        System.out.println("update返回值" + stockMapper.updateManyStock(stocks));
 
-        System.out.println(stockService.updateBatchById(stocks));
-        // 0.5s
-
-        System.out.println("update返回值" + sum);
         long l3 = System.currentTimeMillis();
         System.out.println("消耗时间2:" + (l3 - l2) / 1000.0);
+
+
+        // l2 = System.currentTimeMillis();
+        // System.out.println("消耗时间1:" + (l2 - l) / 1000.0);
+        //
+        // System.out.println("update返回值" + stockMapper.updateManyStock(stocks));
+        //
+        // l3 = System.currentTimeMillis();
+        // System.out.println("消耗时间2:" + (l3 - l2) / 1000.0);
     }
 
 }
