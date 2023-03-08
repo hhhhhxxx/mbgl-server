@@ -54,7 +54,7 @@ public class ExceptionConfig {
         if (StringUtils.isNotEmpty(e.getMessage())) {
             buffer.append("[").append(e.getMessage()).append("]");
         }
-        return RestResponse.fail(e.getCode(), buffer.toString());
+        return RestResponse.fail(e.getCode(),e.getMessage());
     }
 
     /**

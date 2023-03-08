@@ -2,6 +2,7 @@ package com.hhhhhx.mbgl.service.drugstore;
 
 import com.hhhhhx.mbgl.entity.Order;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hhhhhx.mbgl.param.drugstore.order.OrderPayParam;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IOrderService extends IService<Order> {
 
+    Boolean pay(OrderPayParam param);
 }

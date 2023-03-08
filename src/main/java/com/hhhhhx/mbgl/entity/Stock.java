@@ -1,6 +1,9 @@
 package com.hhhhhx.mbgl.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.Version;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -13,6 +16,7 @@ import java.time.LocalDateTime;
  * @since 2023-02-25
  */
 @TableName("t_stock")
+@Data
 public class Stock implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,66 +56,6 @@ public class Stock implements Serializable {
      */
     private String batchId;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    public Integer getDrugId() {
-        return drugId;
-    }
-
-    public void setDrugId(Integer drugId) {
-        this.drugId = drugId;
-    }
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-    public LocalDateTime getProdTime() {
-        return prodTime;
-    }
-
-    public void setProdTime(LocalDateTime prodTime) {
-        this.prodTime = prodTime;
-    }
-    public LocalDateTime getInTime() {
-        return inTime;
-    }
-
-    public void setInTime(LocalDateTime inTime) {
-        this.inTime = inTime;
-    }
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
-    }
-    public String getBatchId() {
-        return batchId;
-    }
-
-    public void setBatchId(String batchId) {
-        this.batchId = batchId;
-    }
-
-    @Override
-    public String toString() {
-        return "Stock{" +
-            "id=" + id +
-            ", drugId=" + drugId +
-            ", quantity=" + quantity +
-            ", prodTime=" + prodTime +
-            ", inTime=" + inTime +
-            ", level=" + level +
-            ", batchId=" + batchId +
-        "}";
-    }
+    @Version
+    private Integer version;
 }

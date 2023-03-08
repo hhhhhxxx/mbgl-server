@@ -6,7 +6,8 @@ import lombok.Data;
 public class DrugViewDto {
     private Integer id;
     private String name;
-    private Double price;
+    private Integer price;
+    private Double tempPrice;
     private String image;
     private String info;
 }

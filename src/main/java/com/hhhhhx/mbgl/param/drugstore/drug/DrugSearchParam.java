@@ -1,4 +1,4 @@
-package com.hhhhhx.mbgl.param.drug;
+package com.hhhhhx.mbgl.param.drugstore.drug;
 
 import com.hhhhhx.mbgl.param.BasePage;
 import lombok.Data;

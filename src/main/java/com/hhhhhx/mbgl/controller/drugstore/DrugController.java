@@ -2,20 +2,14 @@ package com.hhhhhx.mbgl.controller.drugstore;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.hhhhhx.mbgl.dto.DoctorDTO;
+import com.hhhhhx.mbgl.dto.DrugInfoDTO;
 import com.hhhhhx.mbgl.dto.DrugViewDto;
-import com.hhhhhx.mbgl.entity.Drug;
 import com.hhhhhx.mbgl.entity.result.RestResponse;
-import com.hhhhhx.mbgl.param.doctor.DoctorPageVM;
-import com.hhhhhx.mbgl.param.drug.DrugSearchParam;
-import com.hhhhhx.mbgl.service.IDoctorService;
+import com.hhhhhx.mbgl.param.drugstore.drug.DrugSearchParam;
 import com.hhhhhx.mbgl.service.drugstore.IDrugService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.stereotype.Controller;
-
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -39,7 +33,7 @@ public class DrugController {
     }
 
     @GetMapping("/get/info/{id}")
-    public RestResponse<Drug> getInfo(@PathVariable @NotNull Integer id) {
+    public RestResponse<DrugInfoDTO> getInfo(@PathVariable @NotNull Integer id) {
 
         return RestResponse.ok(drugService.getDrugInfoById(id));
     }

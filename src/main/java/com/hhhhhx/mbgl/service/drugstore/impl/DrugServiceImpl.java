@@ -6,12 +6,14 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hhhhhx.mbgl.dto.DrugInfoDTO;
 import com.hhhhhx.mbgl.dto.DrugViewDto;
 import com.hhhhhx.mbgl.entity.Drug;
 import com.hhhhhx.mbgl.mapper.DrugMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.hhhhhx.mbgl.param.drug.DrugSearchParam;
+import com.hhhhhx.mbgl.param.drugstore.drug.DrugSearchParam;
 import com.hhhhhx.mbgl.service.drugstore.IDrugService;
+import com.hhhhhx.mbgl.utils.MoneyUtil;
 import org.springframework.stereotype.Service;
 
 /**
@@ -46,7 +48,8 @@ public class DrugServiceImpl extends ServiceImpl<DrugMapper, Drug> implements ID
             drugViewDto.setId(e.getId());
             drugViewDto.setName(e.getName());
 
-            drugViewDto.setPrice(e.getPrice() / 100.0);
+            drugViewDto.setPrice(e.getPrice());
+            drugViewDto.setTempPrice(MoneyUtil.toDouble(e.getPrice()));
 
             drugViewDto.setImage(e.getImage());
             drugViewDto.setInfo(e.getInfo());
@@ -57,7 +60,13 @@ public class DrugServiceImpl extends ServiceImpl<DrugMapper, Drug> implements ID
     }
 
     @Override
-    public Drug getDrugInfoById(Integer id) {
-        return this.getById(id);
+    public DrugInfoDTO getDrugInfoById(Integer id) {
+        Drug drug = this.getById(id);
+
+        DrugInfoDTO drugInfoDTO = BeanUtil.copyProperties(drug, DrugInfoDTO.class);
+
+        drugInfoDTO.setTempPrice(MoneyUtil.toDouble(drug.getPrice()));
+
+        return drugInfoDTO;
     }
 }

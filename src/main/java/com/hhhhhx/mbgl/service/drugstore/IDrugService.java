@@ -1,10 +1,11 @@
 package com.hhhhhx.mbgl.service.drugstore;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.hhhhhx.mbgl.dto.DrugInfoDTO;
 import com.hhhhhx.mbgl.dto.DrugViewDto;
 import com.hhhhhx.mbgl.entity.Drug;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.hhhhhx.mbgl.param.drug.DrugSearchParam;
+import com.hhhhhx.mbgl.param.drugstore.drug.DrugSearchParam;
 
 /**
  * <p>
@@ -18,5 +19,5 @@ public interface IDrugService extends IService<Drug> {
 
     IPage<DrugViewDto> pageDrugByParam(DrugSearchParam param);
 
-    Drug getDrugInfoById(Integer id);
+    DrugInfoDTO getDrugInfoById(Integer id);
 }

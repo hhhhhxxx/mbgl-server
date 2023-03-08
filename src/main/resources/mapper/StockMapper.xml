@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhhhhx.mbgl.mapper.StockMapper">
+
+
+    <resultMap id="StockDTOMap" type="com.hhhhhx.mbgl.dto.StockDTO">
+        <result column="drug_id" property="drugId" jdbcType="INTEGER"/>
+        <result column="quantity" property="quantity" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="getStockDTOByDrugIds" resultMap="StockDTOMap">
+        select drug_id, sum(quantity) as quantity from mbgl.t_stock
+        where drug_id in
+        <foreach collection="drugIds" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and quantity > 0
+        GROUP BY drug_id order by FIELD(drug_id,
+        <foreach collection="drugIds" item="item" open="" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="getStockByDrugIds" resultType="Stock">
+        select id,drug_id,quantity,version from mbgl.t_stock
+        where drug_id in
+        <foreach collection="drugIds" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and quantity > 0
+        order by FIELD(drug_id,
+        <foreach collection="drugIds" item="item" open="" separator="," close=")">
+            #{item}
+        </foreach>
+        ,quantity
+    </select>
+
+    <update id="batchUpdate">
+        <foreach collection="update_list" item="item" separator=";">
+            update mbgl.t_stock
+            set quantity = quantity - #{item.quantity},
+            version = version + 1
+            where id = #{item.id} and quantity > #{item.quantity}
+        </foreach>
+    </update>
+
+    <update id="updateStockWithVersion">
+        update mbgl.t_stock
+        set quantity = quantity - #{quantity},
+            version  = version + 1
+        where id = #{id}
+          and quantity > #{quantity}
+    </update>
+    <!--and version = #{version}-->
+</mapper>

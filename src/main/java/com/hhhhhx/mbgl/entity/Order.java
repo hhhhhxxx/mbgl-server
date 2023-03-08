@@ -1,6 +1,8 @@
 package com.hhhhhx.mbgl.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -12,6 +14,7 @@ import java.io.Serializable;
  * @since 2023-02-25
  */
 @TableName("t_order")
+@Data
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,63 +41,13 @@ public class Order implements Serializable {
      */
     private String addressPhone;
 
+    // 区域
+    private String addressArea;
+
+    // 进度
+    private Integer step;
     /**
      * 是否付款 0没有 1有
      */
     private Integer pay;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-    public String getAddressName() {
-        return addressName;
-    }
-
-    public void setAddressName(String addressName) {
-        this.addressName = addressName;
-    }
-    public String getAddressPhone() {
-        return addressPhone;
-    }
-
-    public void setAddressPhone(String addressPhone) {
-        this.addressPhone = addressPhone;
-    }
-    public Integer getPay() {
-        return pay;
-    }
-
-    public void setPay(Integer pay) {
-        this.pay = pay;
-    }
-
-    @Override
-    public String toString() {
-        return "Order{" +
-            "id=" + id +
-            ", userId=" + userId +
-            ", address=" + address +
-            ", addressName=" + addressName +
-            ", addressPhone=" + addressPhone +
-            ", pay=" + pay +
-        "}";
-    }
 }
