@@ -3,6 +3,7 @@ package com.hhhhhx.mbgl.service.drugstore.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ArrayUtil;
+import com.hhhhhx.mbgl.dto.OrderDTO;
 import com.hhhhhx.mbgl.dto.StockCombineDTO;
 import com.hhhhhx.mbgl.dto.StockItemWithValueDTO;
 import com.hhhhhx.mbgl.entity.Charge;
@@ -22,6 +23,7 @@ import com.hhhhhx.mbgl.service.drugstore.IChargeService;
 import com.hhhhhx.mbgl.service.drugstore.IOrderItemService;
 import com.hhhhhx.mbgl.service.drugstore.IOrderService;
 import com.hhhhhx.mbgl.service.drugstore.IStockService;
+import com.hhhhhx.mbgl.utils.MoneyUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -101,7 +103,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
         // 做批量更新
         if (!stockService.updateManyStock(updateList)) {
-            throw new MbglServiceException(StockMessage.UPDATE_ERROR);
+            throw new MbglServiceException(StockMessage.ADD_ORDER_ERROR);
         }
 
         // 生成订单
@@ -126,7 +128,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         orderItemList.forEach(e -> e.setOrderId(orderMainId));
 
         if (!orderItemService.saveBatch(orderItemList)) {
-            throw new MbglServiceException(StockMessage.UPDATE_ERROR);
+            throw new MbglServiceException(StockMessage.ADD_CHARGE_ERROR);
         }
 
         // 计算价格 扣除费用
@@ -141,6 +143,20 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         }
 
         return true;
+    }
+
+    @Override
+    public List<OrderDTO> getOrderDTOList(Integer userId) {
+        return this.baseMapper.getOrderDTOList(userId,null);
+    }
+
+    @Override
+    public OrderDTO getOne(Integer userId, Integer orderId) {
+        List<OrderDTO> orderDTOList = this.baseMapper.getOrderDTOList(userId, orderId);
+
+        if(orderDTOList.isEmpty()) throw new MbglServiceException();
+
+        return orderDTOList.get(0);
     }
 
     @Data

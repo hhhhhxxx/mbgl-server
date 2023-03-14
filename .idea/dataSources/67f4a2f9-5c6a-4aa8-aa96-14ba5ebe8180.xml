@@ -718,62 +718,62 @@
       <Current>1</Current>
       <CollationName>latin1_swedish_ci</CollationName>
     </schema>
-    <schema id="225" parent="1" name="crawler">
+    <schema id="225" parent="1" name="album">
       <CollationName>utf8_general_ci</CollationName>
     </schema>
-    <schema id="226" parent="1" name="db01">
+    <schema id="226" parent="1" name="crawler">
       <CollationName>utf8_general_ci</CollationName>
     </schema>
-    <schema id="227" parent="1" name="dbjsp">
+    <schema id="227" parent="1" name="db01">
       <CollationName>utf8_general_ci</CollationName>
     </schema>
-    <schema id="228" parent="1" name="homework">
-      <CollationName>latin1_swedish_ci</CollationName>
-    </schema>
-    <schema id="229" parent="1" name="hospital">
+    <schema id="228" parent="1" name="dbjsp">
       <CollationName>utf8_general_ci</CollationName>
     </schema>
-    <schema id="230" parent="1" name="ihrm">
-      <CollationName>latin1_swedish_ci</CollationName>
-    </schema>
-    <schema id="231" parent="1" name="information_schema">
-      <CollationName>utf8_general_ci</CollationName>
-    </schema>
-    <schema id="232" parent="1" name="mbgl">
-      <CollationName>utf8_general_ci</CollationName>
-    </schema>
-    <schema id="233" parent="1" name="mybatis">
-      <CollationName>latin1_swedish_ci</CollationName>
-    </schema>
-    <schema id="234" parent="1" name="mysql">
-      <CollationName>latin1_swedish_ci</CollationName>
-    </schema>
-    <schema id="235" parent="1" name="oa">
-      <CollationName>latin1_swedish_ci</CollationName>
-    </schema>
-    <schema id="236" parent="1" name="performance_schema">
-      <CollationName>utf8_general_ci</CollationName>
-    </schema>
-    <schema id="237" parent="1" name="smbms">
-      <CollationName>utf8_general_ci</CollationName>
-    </schema>
-    <schema id="238" parent="1" name="ssmbuild">
-      <CollationName>latin1_swedish_ci</CollationName>
-    </schema>
-    <schema id="239" parent="1" name="sys">
-      <CollationName>utf8_general_ci</CollationName>
-    </schema>
-    <schema id="240" parent="1" name="test">
-      <CollationName>latin1_swedish_ci</CollationName>
-    </schema>
-    <schema id="241" parent="1" name="wgcq">
-      <CollationName>utf8_general_ci</CollationName>
-    </schema>
-    <schema id="242" parent="1" name="album">
-      <CollationName>utf8_general_ci</CollationName>
-    </schema>
-    <schema id="243" parent="1" name="hmdp">
+    <schema id="229" parent="1" name="hmdp">
       <CollationName>utf8mb4_general_ci</CollationName>
+    </schema>
+    <schema id="230" parent="1" name="homework">
+      <CollationName>latin1_swedish_ci</CollationName>
+    </schema>
+    <schema id="231" parent="1" name="hospital">
+      <CollationName>utf8_general_ci</CollationName>
+    </schema>
+    <schema id="232" parent="1" name="ihrm">
+      <CollationName>latin1_swedish_ci</CollationName>
+    </schema>
+    <schema id="233" parent="1" name="information_schema">
+      <CollationName>utf8_general_ci</CollationName>
+    </schema>
+    <schema id="234" parent="1" name="mbgl">
+      <CollationName>utf8_general_ci</CollationName>
+    </schema>
+    <schema id="235" parent="1" name="mybatis">
+      <CollationName>latin1_swedish_ci</CollationName>
+    </schema>
+    <schema id="236" parent="1" name="mysql">
+      <CollationName>latin1_swedish_ci</CollationName>
+    </schema>
+    <schema id="237" parent="1" name="oa">
+      <CollationName>latin1_swedish_ci</CollationName>
+    </schema>
+    <schema id="238" parent="1" name="performance_schema">
+      <CollationName>utf8_general_ci</CollationName>
+    </schema>
+    <schema id="239" parent="1" name="smbms">
+      <CollationName>utf8_general_ci</CollationName>
+    </schema>
+    <schema id="240" parent="1" name="ssmbuild">
+      <CollationName>latin1_swedish_ci</CollationName>
+    </schema>
+    <schema id="241" parent="1" name="sys">
+      <CollationName>utf8_general_ci</CollationName>
+    </schema>
+    <schema id="242" parent="1" name="test">
+      <CollationName>latin1_swedish_ci</CollationName>
+    </schema>
+    <schema id="243" parent="1" name="wgcq">
+      <CollationName>utf8_general_ci</CollationName>
     </schema>
     <schema id="244" parent="1" name="xzs">
       <CollationName>latin1_swedish_ci</CollationName>
@@ -781,51 +781,51 @@
     <schema id="245" parent="1" name="xzsss">
       <CollationName>latin1_swedish_ci</CollationName>
     </schema>
-    <table id="246" parent="232" name="t_charge">
+    <table id="246" parent="234" name="t_charge">
       <Comment>费用表</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8_general_ci</CollationName>
     </table>
-    <table id="247" parent="232" name="t_connect">
+    <table id="247" parent="234" name="t_connect">
       <Comment>关联表</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8_general_ci</CollationName>
     </table>
-    <table id="248" parent="232" name="t_drug">
+    <table id="248" parent="234" name="t_drug">
       <Comment>药品表</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8_general_ci</CollationName>
     </table>
-    <table id="249" parent="232" name="t_message">
+    <table id="249" parent="234" name="t_message">
       <Comment>聊天表</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_general_ci</CollationName>
     </table>
-    <table id="250" parent="232" name="t_notice">
+    <table id="250" parent="234" name="t_notice">
       <Comment>通知表</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_general_ci</CollationName>
     </table>
-    <table id="251" parent="232" name="t_order">
+    <table id="251" parent="234" name="t_order">
       <Comment>订单表</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8_general_ci</CollationName>
     </table>
-    <table id="252" parent="232" name="t_order_item">
+    <table id="252" parent="234" name="t_order_item">
       <Engine>InnoDB</Engine>
       <CollationName>utf8_general_ci</CollationName>
     </table>
-    <table id="253" parent="232" name="t_record">
+    <table id="253" parent="234" name="t_record">
       <Comment>记录表</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8_general_ci</CollationName>
     </table>
-    <table id="254" parent="232" name="t_stock">
+    <table id="254" parent="234" name="t_stock">
       <Comment>库存表</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8_general_ci</CollationName>
     </table>
-    <table id="255" parent="232" name="t_user">
+    <table id="255" parent="234" name="t_user">
       <Comment>用户表</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8_general_ci</CollationName>
@@ -834,6 +834,7 @@
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <SequenceIdentity>null</SequenceIdentity>
     </column>
     <column id="257" parent="246" name="cost">
       <Comment>花费</Comment>
@@ -888,6 +889,7 @@
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <SequenceIdentity>null</SequenceIdentity>
     </column>
     <column id="267" parent="248" name="name">
       <Comment>药品名称</Comment>
@@ -1049,6 +1051,7 @@
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <SequenceIdentity>null</SequenceIdentity>
     </column>
     <column id="296" parent="251" name="user_id">
       <Comment>购买用户id</Comment>
@@ -1092,111 +1095,124 @@
       <NotNull>1</NotNull>
       <Position>8</Position>
     </column>
-    <key id="303" parent="251" name="PRIMARY">
+    <column id="303" parent="251" name="create_time">
+      <Comment>购买时间</Comment>
+      <DataType>datetime|0s</DataType>
+      <Position>9</Position>
+    </column>
+    <key id="304" parent="251" name="PRIMARY">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
     </key>
-    <column id="304" parent="252" name="id">
+    <column id="305" parent="252" name="id">
       <Comment>id</Comment>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="305" parent="252" name="order_id">
-      <Comment>一个oder有多个item</Comment>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="306" parent="252" name="quantity">
-      <Comment>数量</Comment>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-    </column>
-    <column id="307" parent="252" name="stock_id">
-      <Comment>库存id</Comment>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-    </column>
-    <key id="308" parent="252" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-    </key>
-    <column id="309" parent="253" name="id">
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="310" parent="253" name="data_id">
+    <column id="306" parent="252" name="order_id">
+      <Comment>一个oder有多个item</Comment>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="307" parent="252" name="quantity">
+      <Comment>数量</Comment>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="308" parent="252" name="stock_id">
+      <Comment>库存id</Comment>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="309" parent="252" name="price">
+      <Comment>小份总价</Comment>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <key id="310" parent="252" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+    </key>
+    <column id="311" parent="253" name="id">
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="312" parent="253" name="data_id">
       <Comment>数据类型</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="311" parent="253" name="value1">
+    <column id="313" parent="253" name="value1">
       <Comment>变量1</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="312" parent="253" name="value2">
+    <column id="314" parent="253" name="value2">
       <Comment>变量2</Comment>
       <DataType>int(11)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="313" parent="253" name="time">
+    <column id="315" parent="253" name="time">
       <Comment>记录时间</Comment>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="314" parent="253" name="patient_user_id">
+    <column id="316" parent="253" name="patient_user_id">
       <Comment>用户id</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <key id="315" parent="253" name="PRIMARY">
+    <key id="317" parent="253" name="PRIMARY">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
     </key>
-    <column id="316" parent="254" name="id">
+    <column id="318" parent="254" name="id">
       <Comment>主键</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="317" parent="254" name="drug_id">
+    <column id="319" parent="254" name="drug_id">
       <Comment>药品id</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="318" parent="254" name="quantity">
+    <column id="320" parent="254" name="quantity">
       <Comment>数量</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="319" parent="254" name="prod_time">
+    <column id="321" parent="254" name="prod_time">
       <Comment>生成日期</Comment>
       <DataType>datetime|0s</DataType>
       <Position>4</Position>
     </column>
-    <column id="320" parent="254" name="in_time">
+    <column id="322" parent="254" name="in_time">
       <Comment>入库时间</Comment>
       <DataType>datetime|0s</DataType>
       <Position>5</Position>
     </column>
-    <column id="321" parent="254" name="level">
+    <column id="323" parent="254" name="level">
       <Comment>预警等级  &#xd;
 1：未过期 &#xd;
 2 ：半年过期 &#xd;
@@ -1206,122 +1222,130 @@
       <DataType>int(1)|0s</DataType>
       <Position>6</Position>
     </column>
-    <column id="322" parent="254" name="batch_id">
+    <column id="324" parent="254" name="batch_id">
       <Comment>批次号</Comment>
       <DataType>varchar(16)|0s</DataType>
       <Position>7</Position>
     </column>
-    <column id="323" parent="254" name="version">
+    <column id="325" parent="254" name="version">
       <Comment>乐观锁 版本号</Comment>
       <DataType>int(11)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
       <Position>8</Position>
     </column>
-    <key id="324" parent="254" name="PRIMARY">
+    <index id="326" parent="254" name="drug_id_index">
+      <ColNames>drug_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="327" parent="254" name="quantity_index">
+      <ColNames>quantity</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="328" parent="254" name="PRIMARY">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
     </key>
-    <column id="325" parent="255" name="id">
+    <column id="329" parent="255" name="id">
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="326" parent="255" name="username">
+    <column id="330" parent="255" name="username">
       <Comment>账号</Comment>
       <DataType>varchar(20)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="327" parent="255" name="password">
+    <column id="331" parent="255" name="password">
       <Comment>密码</Comment>
       <DataType>varchar(20)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="328" parent="255" name="role_id">
+    <column id="332" parent="255" name="role_id">
       <Comment>角色类型  0管理员 1患者 2 医生 3 员工</Comment>
       <DataType>int(4)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="329" parent="255" name="name">
+    <column id="333" parent="255" name="name">
       <Comment>姓名</Comment>
       <DataType>varchar(30)|0s</DataType>
       <Position>5</Position>
     </column>
-    <column id="330" parent="255" name="age">
+    <column id="334" parent="255" name="age">
       <Comment>年龄</Comment>
       <DataType>int(3)|0s</DataType>
       <Position>6</Position>
     </column>
-    <column id="331" parent="255" name="sex">
+    <column id="335" parent="255" name="sex">
       <Comment>性别  0 女 1男 </Comment>
       <DataType>int(1)|0s</DataType>
       <Position>7</Position>
     </column>
-    <column id="332" parent="255" name="phone">
+    <column id="336" parent="255" name="phone">
       <Comment>手机</Comment>
       <DataType>varchar(25)|0s</DataType>
       <Position>8</Position>
     </column>
-    <column id="333" parent="255" name="address">
+    <column id="337" parent="255" name="address">
       <Comment>患者住址</Comment>
       <DataType>varchar(50)|0s</DataType>
       <Position>9</Position>
     </column>
-    <column id="334" parent="255" name="history">
+    <column id="338" parent="255" name="history">
       <Comment>患者病史</Comment>
       <DataType>varchar(200)|0s</DataType>
       <Position>10</Position>
     </column>
-    <column id="335" parent="255" name="allergy">
+    <column id="339" parent="255" name="allergy">
       <Comment>患者过敏史</Comment>
       <DataType>varchar(200)|0s</DataType>
       <Position>11</Position>
     </column>
-    <column id="336" parent="255" name="room">
+    <column id="340" parent="255" name="room">
       <Comment>医生科室</Comment>
       <DataType>varchar(20)|0s</DataType>
       <Position>12</Position>
     </column>
-    <column id="337" parent="255" name="job_year">
+    <column id="341" parent="255" name="job_year">
       <Comment>医生医龄</Comment>
       <DataType>int(3)|0s</DataType>
       <Position>13</Position>
     </column>
-    <column id="338" parent="255" name="position">
+    <column id="342" parent="255" name="position">
       <Comment>医生职位</Comment>
       <DataType>varchar(20)|0s</DataType>
       <Position>14</Position>
     </column>
-    <column id="339" parent="255" name="hospital">
+    <column id="343" parent="255" name="hospital">
       <Comment>医生医院</Comment>
       <DataType>varchar(50)|0s</DataType>
       <Position>15</Position>
     </column>
-    <column id="340" parent="255" name="image">
+    <column id="344" parent="255" name="image">
       <Comment>头像地址</Comment>
       <DataType>varchar(255)|0s</DataType>
       <Position>16</Position>
     </column>
-    <column id="341" parent="255" name="open_id">
+    <column id="345" parent="255" name="open_id">
       <Comment>微信唯一id</Comment>
       <DataType>varchar(35)|0s</DataType>
       <Position>17</Position>
     </column>
-    <index id="342" parent="255" name="username">
+    <index id="346" parent="255" name="username">
       <ColNames>username</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="343" parent="255" name="PRIMARY">
+    <key id="347" parent="255" name="PRIMARY">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
     </key>
-    <key id="344" parent="255" name="username">
+    <key id="348" parent="255" name="username">
       <ColNames>username</ColNames>
       <UnderlyingIndexName>username</UnderlyingIndexName>
     </key>

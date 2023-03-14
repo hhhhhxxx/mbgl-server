@@ -4,6 +4,7 @@ import cn.hutool.core.collection.ListUtil;
 import com.hhhhhx.mbgl.MbglApplication;
 import com.hhhhhx.mbgl.entity.Stock;
 import com.hhhhhx.mbgl.entity.User;
+import com.hhhhhx.mbgl.mapper.OrderMapper;
 import com.hhhhhx.mbgl.mapper.StockMapper;
 import com.hhhhhx.mbgl.service.drugstore.IStockService;
 import org.junit.Test;
@@ -20,6 +21,9 @@ public class OrderServiceTest {
 
     @Autowired
     private StockMapper stockMapper;
+
+    @Autowired
+    private OrderMapper orderMapper;
 
     @Autowired
     private IStockService stockService;
@@ -108,6 +112,11 @@ public class OrderServiceTest {
         //
         // l3 = System.currentTimeMillis();
         // System.out.println("消耗时间2:" + (l3 - l2) / 1000.0);
+    }
+
+    @Test
+    public void test3() {
+        System.out.println(orderMapper.getOrderDTOList(1,null));
     }
 
 }

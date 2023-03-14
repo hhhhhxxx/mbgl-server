@@ -1,10 +1,12 @@
-package com.hhhhhx.mbgl.entity;
+package com.hhhhhx.mbgl.dto;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.hhhhhx.mbgl.entity.OrderItem;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -16,7 +18,7 @@ import java.time.LocalDateTime;
  */
 @TableName("t_order")
 @Data
-public class Order implements Serializable {
+public class OrderDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -54,7 +56,8 @@ public class Order implements Serializable {
 
     private LocalDateTime createTime;
 
-    public Order() {
-        createTime = LocalDateTime.now();
-    }
+
+    private Integer cost;
+
+    private List<OrderItemDTO> orderItemList;
 }

@@ -55,7 +55,7 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
 
         Page<Notice> page = new Page<>(model.getPageIndex(), model.getPageSize());
 
-        this.lambdaQuery()
+        page = this.lambdaQuery()
                 .eq(model.getUserId() != null, Notice::getReceiveUserId, model.getUserId())
                 .eq(model.getState() != null, Notice::getState, model.getState())
                 .page(page);

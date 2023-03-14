@@ -6,8 +6,7 @@ public enum OrderStep {
     // 普通通知 无操作
     SEND(2,"已发货"),
     TRANSPORT(3,"运输中"),
-    INFO(3,"运输中"),
-    END(5,"运输中");
+    END(4,"已签收");
 
 
     Integer code;
