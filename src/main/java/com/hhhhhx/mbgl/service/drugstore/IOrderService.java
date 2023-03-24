@@ -4,6 +4,7 @@ import com.hhhhhx.mbgl.dto.OrderDTO;
 import com.hhhhhx.mbgl.entity.Order;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hhhhhx.mbgl.param.drugstore.order.OrderPayParam;
+import com.hhhhhx.mbgl.param.drugstore.order.OrderPrePayParam;
 
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface IOrderService extends IService<Order> {
     List<OrderDTO> getOrderDTOList(Integer userId);
 
     OrderDTO getOne(Integer userId, Integer orderId);
+
+    Boolean payPre(OrderPrePayParam param);
 }

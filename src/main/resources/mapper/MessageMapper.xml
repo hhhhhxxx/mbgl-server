@@ -4,8 +4,8 @@
 
 
     <select id="getEarlyChat" resultType="Message">
-        select m.id, m.type, m.content, m.create_time, m.send_user_id, m.receive_user_id
-        from (select m2.id, m2.type, m2.content, m2.create_time, m2.send_user_id, m2.receive_user_id
+        select m.id, m.type, m.content, m.create_time, m.send_user_id, m.receive_user_id, m.prescription_id
+        from (select m2.id, m2.type, m2.content, m2.create_time, m2.send_user_id, m2.receive_user_id,m2.prescription_id
               from mbgl.t_message m2
               where m2.create_time &lt; #{targetTime}
                 and ((m2.send_user_id = #{sendUserId} and m2.receive_user_id = #{receiveUserId})
@@ -16,7 +16,7 @@
     </select>
 
     <select id="getNewChat" resultType="Message">
-        select m2.id, m2.type, m2.content, m2.create_time, m2.send_user_id, m2.receive_user_id
+        select m2.id, m2.type, m2.content, m2.create_time, m2.send_user_id, m2.receive_user_id,m2.prescription_id
         from mbgl.t_message m2
         where m2.create_time &gt; #{targetTime}
           and ((m2.send_user_id = #{sendUserId} and m2.receive_user_id = #{receiveUserId})

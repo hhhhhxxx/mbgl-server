@@ -5,8 +5,9 @@ import lombok.Data;
 
 public enum MessageType {
     APPLY_CONNECT(10001,"申请与医生建立联系"),
-    CANCEL_CONNECT(10002,"取消与医生的联系");
-
+    CANCEL_CONNECT(10002,"取消与医生的联系"),
+    NORMAL_MSG(1,"普通消息"),
+    PRES_MSG(2,"处方订单");
     Integer code;
     String name;
 

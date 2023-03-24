@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhhhhx.mbgl.mapper.DrugMapper">
+
+
+    <select id="getPreShopList" resultType="com.hhhhhx.mbgl.dto.DrugShopItem">
+        select d.id,
+               d.name,
+               d.unit,
+               d.price,
+               d.warn,
+               d.info,
+               d.usages,
+               d.image,
+               d.valid_month,
+               d.prod_comp,
+               d.prescription,
+               d.classification,
+               pi.quantity as quantity
+        from mbgl.t_drug d
+                 inner join mbgl.t_prescription_item pi on pi.drug_id = d.id
+        where pi.prescription_id = #{pre_id}
+    </select>
+
+</mapper>

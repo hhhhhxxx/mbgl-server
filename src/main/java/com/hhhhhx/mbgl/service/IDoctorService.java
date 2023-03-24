@@ -20,4 +20,6 @@ public interface IDoctorService {
     Boolean updateByUserId(DoctorDTO doctor);
 
     IPage<DoctorDTO> pageDoctorByParm(DoctorPageVM param);
+
+
 }

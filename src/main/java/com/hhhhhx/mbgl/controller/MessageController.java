@@ -7,6 +7,7 @@ import com.hhhhhx.mbgl.entity.result.RestResponse;
 import com.hhhhhx.mbgl.param.msg.MessageListVM;
 import com.hhhhhx.mbgl.param.msg.MessageSendVM;
 import com.hhhhhx.mbgl.service.IMessageService;
+import com.hhhhhx.mbgl.service.drugstore.IPrescriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +35,8 @@ public class  MessageController {
     @Autowired
     private IMessageService messageService;
 
+
+
     @PostMapping("/send")
     public RestResponse send(@RequestBody @Valid MessageSendVM model) {
 
@@ -55,22 +58,4 @@ public class  MessageController {
 
         return RestResponse.ok(chatRecord);
     }
-
-    // @PostMapping("/getAfter")
-    // public RestResponse getAfter(@RequestBody @Valid MessageListVM model) {
-    //
-    //
-    //     // 使用websocket实时推送
-    //
-    //     // if(model.getTargetTime() == null) {
-    //     //     model.setTargetTime(LocalDateTime.now());
-    //     // }
-    //     //
-    //     // List<Message> chatRecord = messageService.getAfterChat(model);
-    //     //
-    //     // return RestResponse.ok(chatRecord);
-    // }
-
-
-    // POST https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=ACCESS_TOKEN
 }

@@ -6,11 +6,9 @@ import cn.hutool.core.util.ArrayUtil;
 import com.hhhhhx.mbgl.dto.OrderDTO;
 import com.hhhhhx.mbgl.dto.StockCombineDTO;
 import com.hhhhhx.mbgl.dto.StockItemWithValueDTO;
-import com.hhhhhx.mbgl.entity.Charge;
-import com.hhhhhx.mbgl.entity.Order;
-import com.hhhhhx.mbgl.entity.OrderItem;
-import com.hhhhhx.mbgl.entity.Stock;
+import com.hhhhhx.mbgl.entity.*;
 import com.hhhhhx.mbgl.entity.enums.OrderState;
+import com.hhhhhx.mbgl.entity.enums.PrescriptionState;
 import com.hhhhhx.mbgl.exception.MbglServiceException;
 import com.hhhhhx.mbgl.mapper.OrderMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -18,11 +16,9 @@ import com.hhhhhx.mbgl.mapper.StockMapper;
 import com.hhhhhx.mbgl.massage.value.StockMessage;
 import com.hhhhhx.mbgl.param.drugstore.order.AddressParam;
 import com.hhhhhx.mbgl.param.drugstore.order.OrderPayParam;
+import com.hhhhhx.mbgl.param.drugstore.order.OrderPrePayParam;
 import com.hhhhhx.mbgl.param.drugstore.order.Shop;
-import com.hhhhhx.mbgl.service.drugstore.IChargeService;
-import com.hhhhhx.mbgl.service.drugstore.IOrderItemService;
-import com.hhhhhx.mbgl.service.drugstore.IOrderService;
-import com.hhhhhx.mbgl.service.drugstore.IStockService;
+import com.hhhhhx.mbgl.service.drugstore.*;
 import com.hhhhhx.mbgl.utils.MoneyUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -57,6 +53,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
     @Autowired
     IChargeService chargeService;
+
+    @Autowired
+    IPrescriptionService prescriptionService;
 
     @Override
     @Transactional
@@ -157,6 +156,24 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         if(orderDTOList.isEmpty()) throw new MbglServiceException();
 
         return orderDTOList.get(0);
+    }
+
+    @Override
+    public Boolean payPre(OrderPrePayParam param) {
+        Boolean ans = prescriptionService.judgePreValid(param.getPreId());
+
+        if(!ans) throw new MbglServiceException();
+
+        Boolean pay = this.pay(param);
+
+        if(!pay) throw new MbglServiceException();
+
+        boolean update = prescriptionService.lambdaUpdate()
+                .eq(Prescription::getId, param.getPreId()).set(Prescription::getState, PrescriptionState.USE.getCode()).update();
+
+        if(!update) throw new MbglServiceException();
+
+        return true;
     }
 
     @Data

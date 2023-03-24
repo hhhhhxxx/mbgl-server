@@ -7,14 +7,19 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hhhhhx.mbgl.dto.DrugInfoDTO;
+import com.hhhhhx.mbgl.dto.DrugShopItem;
 import com.hhhhhx.mbgl.dto.DrugViewDto;
 import com.hhhhhx.mbgl.entity.Drug;
 import com.hhhhhx.mbgl.mapper.DrugMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hhhhhx.mbgl.param.drugstore.drug.DrugSearchParam;
 import com.hhhhhx.mbgl.service.drugstore.IDrugService;
+import com.hhhhhx.mbgl.service.drugstore.IPrescriptionService;
 import com.hhhhhx.mbgl.utils.MoneyUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -26,6 +31,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DrugServiceImpl extends ServiceImpl<DrugMapper, Drug> implements IDrugService {
+
+    @Autowired
+    IPrescriptionService prescriptionService;
 
     @Override
     public IPage<DrugViewDto> pageDrugByParam(DrugSearchParam param) {
@@ -69,4 +77,11 @@ public class DrugServiceImpl extends ServiceImpl<DrugMapper, Drug> implements ID
 
         return drugInfoDTO;
     }
+
+    @Override
+    public List<DrugShopItem> getPreShopList(Integer preId) {
+        return  this.baseMapper.getPreShopList(preId);
+    }
+
+    /*点击处方药房 替换本地购物车的数据*/
 }

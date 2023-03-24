@@ -81,8 +81,6 @@ public class WebSocketService {
      * 自定义 指定的userId服务端向客户端发送消息
      */
     public static void sendInfo(Message message) {
-
-
         //log.info("发送消息到:"+userId+"，报文:"+message);
         if (!StrUtil.isEmpty(message.getReceiveUserId().toString())
                 && webSocketMap.containsKey(message.getReceiveUserId().toString())) {

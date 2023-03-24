@@ -3,6 +3,7 @@ package com.hhhhhx.mbgl.controller.drugstore;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hhhhhx.mbgl.dto.DrugInfoDTO;
+import com.hhhhhx.mbgl.dto.DrugShopItem;
 import com.hhhhhx.mbgl.dto.DrugViewDto;
 import com.hhhhhx.mbgl.entity.result.RestResponse;
 import com.hhhhhx.mbgl.param.drugstore.drug.DrugSearchParam;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * <p>
@@ -36,5 +38,10 @@ public class DrugController {
     public RestResponse<DrugInfoDTO> getInfo(@PathVariable @NotNull Integer id) {
 
         return RestResponse.ok(drugService.getDrugInfoById(id));
+    }
+
+    @GetMapping("/get/pre/shoplist/{preid}")
+    public RestResponse<List<DrugShopItem>> getPreShopList(@PathVariable("preid") @NotNull Integer preId) {
+        return RestResponse.ok(drugService.getPreShopList(preId));
     }
 }

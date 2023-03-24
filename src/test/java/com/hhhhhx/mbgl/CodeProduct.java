@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collections;
 
-@SpringBootTest(classes = MbglApplication.class)
+@SpringBootTest(classes = MbglApplication.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
 public class CodeProduct {
     /*代码生成器*/
@@ -40,11 +40,13 @@ public class CodeProduct {
                             // .addInclude("t_user")
                             // .addInclude("t_notice")
                             // .addInclude("t_user")
-                            .addInclude("t_charge")
-                            .addInclude("t_drug")
-                            .addInclude("t_order")
-                            .addInclude("t_order_item")
-                            .addInclude("t_stock")
+                            // .addInclude("t_charge")
+                            // .addInclude("t_drug")
+                            // .addInclude("t_order")
+                            // .addInclude("t_order_item")
+                            // .addInclude("t_stock")
+                            .addInclude("t_prescription")
+                            .addInclude("t_prescription_item")
                             .addTablePrefix("t_"); // 设置过滤表前缀
                 })
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板

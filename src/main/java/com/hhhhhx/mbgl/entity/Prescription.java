@@ -13,33 +13,23 @@ import java.time.LocalDateTime;
  *
  * </p>
  *
- * @author hhx
- * @since 2022-09-17
+ * @author hhhhhx
+ * @since 2023-03-16
  */
-@TableName("t_message")
+@TableName("t_prescription")
 @Data
-public class Message implements Serializable {
+public class Prescription implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    private Integer type;
-    /**
-     * 内容
-     */
-    private String content;
+    private Integer doctorId;
+
+    private Integer patientId;
 
     private LocalDateTime createTime;
 
-    /**
-     * 发送者用户ID
-     */
-    private Integer sendUserId;
-
-    private Integer receiveUserId;
-
-    // 药方id
-    private  Integer prescriptionId;
+    private Integer state;
 }
