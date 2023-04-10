@@ -1,4 +1,4 @@
-package com.hhhhhx.mbgl.controller;
+package com.hhhhhx.mbgl.controller.user;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;

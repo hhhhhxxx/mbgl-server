@@ -67,7 +67,6 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
         message.setCreateTime(LocalDateTime.now());
         message.setSendUserId(model.getSendUserId());
         message.setReceiveUserId(model.getReceiveUserId());
-        message.setContent(model.getContent());
 
         List<Shop> shopList = model.getShopList();
 

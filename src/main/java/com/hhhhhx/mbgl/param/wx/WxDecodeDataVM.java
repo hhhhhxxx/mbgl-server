@@ -6,4 +6,5 @@ import lombok.Data;
 public class WxDecodeDataVM {
     private String encryptedData;
     private String iv;
+    private Integer userId;
 }

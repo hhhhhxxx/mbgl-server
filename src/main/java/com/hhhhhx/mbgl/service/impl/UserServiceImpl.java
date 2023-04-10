@@ -1,6 +1,7 @@
 package com.hhhhhx.mbgl.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hhhhhx.mbgl.dto.PatientDTO;
@@ -14,6 +15,7 @@ import com.hhhhhx.mbgl.massage.value.LoginValue;
 import com.hhhhhx.mbgl.param.user.UserLoginParam;
 import com.hhhhhx.mbgl.param.doctor.DoctorPageVM;
 import com.hhhhhx.mbgl.param.patient.PatientPageVM;
+import com.hhhhhx.mbgl.param.user.UserPageParam;
 import com.hhhhhx.mbgl.param.user.UserUploadImageParam;
 import com.hhhhhx.mbgl.param.user.UserWeixinLoginParam;
 import com.hhhhhx.mbgl.service.IUserService;
@@ -23,6 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * <p>
@@ -103,4 +107,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         return this.lambdaUpdate().eq(User::getId,param.getId()).set(User::getImage,param.getImage()).update();
     }
+
+    @Override
+    public IPage<User> pageList(UserPageParam param) {
+
+        Page<User> page = new Page<>(param.getPageIndex(),param.getPageSize());
+
+
+
+        return this.lambdaQuery()
+                .eq(param.getRoleId() != null,User::getRoleId,param.getRoleId())
+                .like(StrUtil.isNotBlank(param.getUsername()),User::getUsername,param.getUsername()).page(page);
+    }
+
+    @Override
+    public List<PatientDTO> listConsult() {
+        return this.baseMapper.getConsultPatient();
+    }
+
+
 }

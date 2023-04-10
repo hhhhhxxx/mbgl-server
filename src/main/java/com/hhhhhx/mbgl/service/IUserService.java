@@ -9,8 +9,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.hhhhhx.mbgl.param.user.UserLoginParam;
 import com.hhhhhx.mbgl.param.doctor.DoctorPageVM;
 import com.hhhhhx.mbgl.param.patient.PatientPageVM;
+import com.hhhhhx.mbgl.param.user.UserPageParam;
 import com.hhhhhx.mbgl.param.user.UserUploadImageParam;
 import com.hhhhhx.mbgl.param.user.UserWeixinLoginParam;
+
+import java.util.List;
 
 /**
  * <p>
@@ -34,5 +37,7 @@ public interface IUserService extends IService<User> {
 
     Boolean upLoadImage(UserUploadImageParam param);
 
+    IPage<User> pageList(UserPageParam param);
 
+    List<PatientDTO> listConsult();
 }

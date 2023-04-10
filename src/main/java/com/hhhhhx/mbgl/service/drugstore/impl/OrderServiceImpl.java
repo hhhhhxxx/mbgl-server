@@ -1,8 +1,8 @@
 package com.hhhhhx.mbgl.service.drugstore.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.collection.ListUtil;
-import cn.hutool.core.util.ArrayUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hhhhhx.mbgl.dto.OrderDTO;
 import com.hhhhhx.mbgl.dto.StockCombineDTO;
 import com.hhhhhx.mbgl.dto.StockItemWithValueDTO;
@@ -12,14 +12,13 @@ import com.hhhhhx.mbgl.entity.enums.PrescriptionState;
 import com.hhhhhx.mbgl.exception.MbglServiceException;
 import com.hhhhhx.mbgl.mapper.OrderMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.hhhhhx.mbgl.mapper.StockMapper;
 import com.hhhhhx.mbgl.massage.value.StockMessage;
 import com.hhhhhx.mbgl.param.drugstore.order.AddressParam;
 import com.hhhhhx.mbgl.param.drugstore.order.OrderPayParam;
 import com.hhhhhx.mbgl.param.drugstore.order.OrderPrePayParam;
 import com.hhhhhx.mbgl.param.drugstore.order.Shop;
+import com.hhhhhx.mbgl.param.drugstore.order.OrderPageParam;
 import com.hhhhhx.mbgl.service.drugstore.*;
-import com.hhhhhx.mbgl.utils.MoneyUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -172,6 +171,27 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
                 .eq(Prescription::getId, param.getPreId()).set(Prescription::getState, PrescriptionState.USE.getCode()).update();
 
         if(!update) throw new MbglServiceException();
+
+        return true;
+    }
+
+    @Override
+    public IPage<Order> pageList(OrderPageParam param) {
+        IPage<Order> page = new Page<>(param.getPageIndex(), param.getPageSize());
+
+        return this.lambdaQuery().eq(param.getId() != null , Order::getId,param.getId()).page(page);
+    }
+
+    @Override
+    public Boolean deleteById(Integer id) {
+
+        Boolean a = orderItemService.deleteByOrderId(id);
+
+        if(!a) throw new MbglServiceException();
+
+        boolean b = this.removeById(id);
+
+        if(!b) throw new MbglServiceException();
 
         return true;
     }

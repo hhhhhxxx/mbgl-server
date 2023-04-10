@@ -74,4 +74,33 @@
             </foreach>
         </where>
     </update>
+
+    <select id="getDangerStock" resultType="stock">
+        select * from mbgl.t_stock s
+        inner join mbgl.t_drug d on d.id = s.drug_id
+        where s.level = 0 and  ( DATE_SUB(DATE_ADD(s.prod_time, INTERVAL d.valid_month month),INTERVAL 6 month) &lt; DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+         or DATE_ADD(s.prod_time, INTERVAL d.valid_month month) &lt; DATE_FORMAT( NOW( ), '%Y-%m-%d' ) )
+    </select>
+
+    <update id="updateDangerStock">
+        update mbgl.t_stock s inner join mbgl.t_drug d on d.id = s.drug_id
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix=" level = case " suffix="end">
+                when DATE_ADD(s.prod_time, INTERVAL d.valid_month month) &lt; DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+                then s.level + 3
+                when DATE_SUB(DATE_ADD(s.prod_time, INTERVAL d.valid_month month),INTERVAL 1 month) &lt; DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+                then s.level + 2
+                when DATE_SUB(DATE_ADD(s.prod_time, INTERVAL d.valid_month month),INTERVAL 6 month) &lt; DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+                then s.level + 1
+                else 0
+            </trim>
+        </trim>
+        <where>
+            s.id in
+            <foreach collection="update_list" item="item" open="(" separator="," close=")">
+                #{item.id}
+            </foreach>
+        </where>
+    </update>
+
 </mapper>

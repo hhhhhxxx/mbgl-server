@@ -1,10 +1,12 @@
 package com.hhhhhx.mbgl.service.drugstore;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hhhhhx.mbgl.dto.OrderDTO;
 import com.hhhhhx.mbgl.entity.Order;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hhhhhx.mbgl.param.drugstore.order.OrderPayParam;
 import com.hhhhhx.mbgl.param.drugstore.order.OrderPrePayParam;
+import com.hhhhhx.mbgl.param.drugstore.order.OrderPageParam;
 
 import java.util.List;
 
@@ -25,4 +27,8 @@ public interface IOrderService extends IService<Order> {
     OrderDTO getOne(Integer userId, Integer orderId);
 
     Boolean payPre(OrderPrePayParam param);
+
+    IPage<Order> pageList(OrderPageParam param);
+
+    Boolean deleteById(Integer id);
 }

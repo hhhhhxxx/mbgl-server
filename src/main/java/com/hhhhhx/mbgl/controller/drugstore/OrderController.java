@@ -1,17 +1,16 @@
 package com.hhhhhx.mbgl.controller.drugstore;
 
 
-import com.hhhhhx.mbgl.dto.DrugInfoDTO;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hhhhhx.mbgl.dto.OrderDTO;
+import com.hhhhhx.mbgl.entity.Order;
 import com.hhhhhx.mbgl.entity.result.RestResponse;
 import com.hhhhhx.mbgl.param.drugstore.order.OrderPayParam;
 import com.hhhhhx.mbgl.param.drugstore.order.OrderPrePayParam;
+import com.hhhhhx.mbgl.param.drugstore.order.OrderPageParam;
 import com.hhhhhx.mbgl.service.drugstore.IOrderService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.stereotype.Controller;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -56,4 +55,25 @@ public class OrderController {
 
         return RestResponse.ok(orderService.getOne(userId, orderId));
     }
+
+
+    @GetMapping("/page/list")
+    public RestResponse<IPage<Order>> pageList(@Valid OrderPageParam param) {
+        return RestResponse.ok(orderService.pageList(param));
+    }
+
+    @GetMapping("/get/{id}")
+    public RestResponse<Order> getOne(@NotNull @PathVariable("id") Integer id) {
+        return RestResponse.ok(orderService.getById(id));
+    }
+
+    @PostMapping("/su")
+    public RestResponse<Boolean> pageList(@RequestBody Order order) {
+        return RestResponse.ok(orderService.saveOrUpdate(order));
+    }
+    @PostMapping("/delete/{id}")
+    public RestResponse<Boolean> delete(@NotNull @PathVariable("id") Integer id) {
+        return RestResponse.ok(orderService.deleteById(id));
+    }
+
 }

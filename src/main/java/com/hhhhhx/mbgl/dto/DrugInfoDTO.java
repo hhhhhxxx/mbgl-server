@@ -13,7 +13,6 @@ import java.io.Serializable;
  * @author hhhhhx
  * @since 2023-02-25
  */
-@TableName("t_drug")
 @Data
 public class DrugInfoDTO implements Serializable {
 

@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.List;
 
-@SpringBootTest(classes = MbglApplication.class)
+@SpringBootTest(classes = MbglApplication.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
 public class DataFileProduct {
 

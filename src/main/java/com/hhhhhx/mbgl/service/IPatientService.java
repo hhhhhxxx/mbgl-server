@@ -8,6 +8,8 @@ import com.hhhhhx.mbgl.param.patient.PatientPageVM;
 import com.hhhhhx.mbgl.param.patient.PatientUpdateParam;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -23,4 +25,6 @@ public interface IPatientService {
     Boolean updateByUserId(PatientUpdateParam patient);
 
     IPage<PatientDTO> pagePatientByParm(PatientPageVM param);
+
+    List<PatientDTO> listConsult();
 }

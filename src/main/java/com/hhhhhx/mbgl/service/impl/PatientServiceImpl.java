@@ -18,6 +18,8 @@ import com.hhhhhx.mbgl.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 服务实现类
@@ -89,5 +91,10 @@ public class PatientServiceImpl implements IPatientService {
         }
 
         return page;
+    }
+
+    @Override
+    public List<PatientDTO> listConsult() {
+        return userService.listConsult();
     }
 }

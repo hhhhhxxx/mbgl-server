@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hhhhhx.mbgl.mapper.UserMapper">
 
-    <select id="getPatientOfDoctor" resultType="User">
+    <select id="getPatientOfDoctor" resultType="com.hhhhhx.mbgl.dto.PatientDTO">
         select p.id,p.name,p.age,p.sex,p.phone,p.address,p.history,p.allergy,p.image from mbgl.t_user p
         inner join mbgl.t_connect c on c.patient_user_id = p.id
         <where>
@@ -15,7 +15,7 @@
         </where>
     </select>
 
-    <select id="getDoctorOfPatient" resultType="User">
+    <select id="getDoctorOfPatient" resultType="com.hhhhhx.mbgl.dto.DoctorDTO">
 
         select d.id,d.name,d.sex,d.phone,d.room,d.job_year,d.phone,d.hospital from mbgl.t_user d
         inner join mbgl.t_connect c on c.doctor_user_id = d.id
@@ -28,6 +28,13 @@
                 and d.room like concat('%',#{key},'%')
             </if>
         </where>
+    </select>
+
+    <select id="getConsultPatient" resultType="com.hhhhhx.mbgl.dto.PatientDTO">
+        select p.id,p.name,p.sex,p.phone,p.image  from mbgl.t_user p
+        inner join mbgl.t_message m on p.id = m.send_user_id
+        inner join mbgl.t_user e on e.id = m.receive_user_id
+        where p.role_id = 1 and e.role_id = 3 group by p.id,p.name,p.sex,p.phone,p.image
     </select>
 
 </mapper>

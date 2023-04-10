@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -24,4 +26,6 @@ public interface UserMapper extends BaseMapper<User> {
 
     IPage<DoctorDTO> getDoctorOfPatient(IPage<DoctorDTO> page, @Param("patient_user_id") Integer patientUserId,
                                         @Param("key") String key);
+
+    List<PatientDTO> getConsultPatient();
 }

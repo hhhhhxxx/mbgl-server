@@ -8,10 +8,11 @@ import java.util.Map;
  * @author zuck
  */
 public enum RoleEnum {
-
+    ADMIN(0, "ADMIN"),
     PATIENT(1, "PATIENT"),
     DOCTOR(2,"DOCTOR"),
-    ADMIN(3, "ADMIN");
+    EMPLOYEE(3,"EMPLOYEE");
+
 
     Integer code;
     String name;

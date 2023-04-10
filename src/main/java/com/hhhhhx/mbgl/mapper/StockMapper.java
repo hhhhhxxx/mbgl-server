@@ -24,4 +24,9 @@ public interface StockMapper extends BaseMapper<Stock> {
    List<StockItemWithValueDTO> getStockItemWithValueDTOByDrugIds(List<Integer> drugIds);
 
    int updateManyStock(@Param("update_list") List<Stock> updateList);
+
+   /* 获取低于50库存 和半年内过期的 */
+   List<Stock> getDangerStock();
+
+   int updateDangerStock(@Param("update_list") List<Stock> updateList);
 }

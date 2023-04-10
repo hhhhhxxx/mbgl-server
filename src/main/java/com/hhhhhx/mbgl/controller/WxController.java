@@ -4,9 +4,12 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.hhhhhx.mbgl.entity.result.RestResponse;
+import com.hhhhhx.mbgl.entity.wx.WxAccessTokenResult;
 import com.hhhhhx.mbgl.entity.wx.WxRunDataResult;
 import com.hhhhhx.mbgl.param.wx.WxDecodeDataVM;
+import com.hhhhhx.mbgl.param.wx.WxSendSubscribeMessage;
 import com.hhhhhx.mbgl.service.other.WxRunService;
+import com.hhhhhx.mbgl.task.RedissonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,11 +22,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/wx")
-public class WxRunController {
+public class WxController {
 
 
     @Autowired
     private WxRunService wxRunService;
+
+    @Autowired
+    private RedissonService redissonService;
 
     @GetMapping("/set/sessionkey")
     public RestResponse sessionkey(@RequestHeader("user_id") Integer userId, String code) {
@@ -58,19 +64,7 @@ public class WxRunController {
         WxRunDataResult wxRunDataResult = new WxRunDataResult();
         wxRunDataResult.setStepInfoList(stepItemList);
 
-        // System.out.println(">>> "+wxRunDataResult);
-
         WxRunDataResult.stepItem stepItem = stepItemList.get(stepInfoList.size() - 1);
-
-        //获得时间戳
-        // long milliseconds = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
-
-        // long timestamp = Long.parseLong(stepItem.getTimestamp());
-        //
-        // // 将时间戳转为当前时间
-        // LocalDate localDate = Instant.ofEpochSecond(timestamp).atZone(ZoneOffset.ofHours(8)).toLocalDate();
-        //
-        // System.out.println(localDate);
 
         return RestResponse.ok(stepItem.getStep());
     }
@@ -107,6 +101,14 @@ public class WxRunController {
 
         System.out.println(localDate);
 
+        return RestResponse.ok();
+    }
+
+
+    @PostMapping("/send/message")
+    public RestResponse sendMessage(@RequestBody WxSendSubscribeMessage param) {
+        // return RestResponse.ok(wxRunService.sendMessage(param));
+        redissonService.addDelay(param);
         return RestResponse.ok();
     }
 }

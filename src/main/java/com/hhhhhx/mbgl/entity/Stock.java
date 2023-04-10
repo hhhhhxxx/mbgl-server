@@ -1,8 +1,11 @@
 package com.hhhhhx.mbgl.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.Version;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -37,7 +40,7 @@ public class Stock implements Serializable {
     private Integer quantity;
 
     /**
-     * 生成日期
+     * 生产日期
      */
     private LocalDateTime prodTime;
 
@@ -47,7 +50,7 @@ public class Stock implements Serializable {
     private LocalDateTime inTime;
 
     /**
-     * 预警等级  	1：未过期 	2 ：半年过期 	2 ：一个月后过期  	4 ：已过期 	10：低库存少于50
+     * 预警等级  	1：未过期 	2 ：半年过期 	3 ：一个月后过期  	4 ：已过期 	10：低库存少于50
      */
     private Integer level;
 

@@ -1,10 +1,11 @@
-package com.hhhhhx.mbgl.controller;
+package com.hhhhhx.mbgl.controller.user;
 
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hhhhhx.mbgl.dto.PatientDTO;
+import com.hhhhhx.mbgl.dto.user.EmployeeDTO;
 import com.hhhhhx.mbgl.entity.User;
 import com.hhhhhx.mbgl.entity.enums.RoleEnum;
 import com.hhhhhx.mbgl.entity.result.RestResponse;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Controller;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * <p>
@@ -56,5 +58,10 @@ public class PatientController {
     public RestResponse<Boolean> update(@RequestBody @Valid PatientUpdateParam patient) {
 
         return RestResponse.ok(patientService.updateByUserId(patient));
+    }
+
+    @GetMapping("/list/consult")
+    public RestResponse<List<PatientDTO>> list() {
+        return RestResponse.ok(patientService.listConsult());
     }
 }
