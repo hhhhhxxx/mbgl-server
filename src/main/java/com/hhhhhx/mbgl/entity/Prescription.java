@@ -32,4 +32,6 @@ public class Prescription implements Serializable {
     private LocalDateTime createTime;
 
     private Integer state;
+
+    private String info;
 }

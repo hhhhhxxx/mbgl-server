@@ -47,6 +47,12 @@ public class UserController {
         return RestResponse.ok(userService.upLoadImage(param));
     }
 
+    @GetMapping("/get/nameImage/{id}")
+    public RestResponse<UserDTO> getNameImageById(@NotNull @PathVariable("id") Integer id) {
+        return RestResponse.ok(userService.getNameImageById(id));
+    }
+
+
     //-----------------------
 
     @GetMapping("/page/list")

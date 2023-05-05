@@ -31,4 +31,6 @@ public interface IDrugService extends IService<Drug> {
     IPage<Drug> pageList(DrugSearchParam param);
 
     List<ClassificationDTO> getClazz();
+
+
 }

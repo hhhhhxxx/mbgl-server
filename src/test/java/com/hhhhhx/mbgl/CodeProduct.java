@@ -45,7 +45,7 @@ public class CodeProduct {
                             // .addInclude("t_order")
                             // .addInclude("t_order_item")
                             // .addInclude("t_stock")
-                            // .addInclude("t_prescription")
+                            .addInclude("t_prescription")
                             // .addInclude("t_prescription_item")
                             .addInclude("t_drug_type")
                             .addTablePrefix("t_"); // 设置过滤表前缀

@@ -88,7 +88,8 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
         }
 
         // 创建处方
-        Integer preID = prescriptionService.createPrescription(model.getSendUserId(), model.getReceiveUserId(), shopList);
+        Integer preID = prescriptionService.createPrescription(model.getSendUserId(), model.getReceiveUserId(),
+                shopList,model.getInfo());
 
 
         // 编造消息

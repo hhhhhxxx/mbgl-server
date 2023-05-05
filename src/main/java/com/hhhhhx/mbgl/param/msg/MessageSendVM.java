@@ -18,5 +18,7 @@ public class MessageSendVM {
         @NotNull
         private Integer type;
 
+        // 处方消息
+        private String info;
         private List<Shop>shopList;
 }

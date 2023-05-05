@@ -82,6 +82,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
                     stockQuantityList.get(i).getQuantity() < shopList.get(i).getQuantity()) {
                 throw new MbglServiceException(StockMessage.NO_STOCK);
             }
+            // 不能修改参数来手段购买处方药
+            if(stockQuantityList.get(i).getPrescription() == 1) {
+                throw new MbglServiceException();
+            }
         }
 
 

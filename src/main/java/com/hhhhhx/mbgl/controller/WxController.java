@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.xml.crypto.Data;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.util.List;
 
 @RestController
@@ -108,6 +105,10 @@ public class WxController {
     @PostMapping("/send/message")
     public RestResponse sendMessage(@RequestBody WxSendSubscribeMessage param) {
         // return RestResponse.ok(wxRunService.sendMessage(param));
+
+        Long timeLong = param.getTimeLong();
+        LocalDateTime time = Instant.ofEpochMilli(timeLong).atZone(ZoneId.systemDefault()).toLocalDateTime();
+        param.setTime(time);
         redissonService.addDelay(param);
         return RestResponse.ok();
     }

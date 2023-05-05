@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -28,6 +30,7 @@ public class RedissonService {
         RDelayedQueue<WxSendSubscribeMessage> delayedQueue = redissonClient.getDelayedQueue(blockingFairQueue);
 
         LocalDateTime time = param.getTime();
+
         if(!time.isAfter(LocalDateTime.now())) {
             return;
         }

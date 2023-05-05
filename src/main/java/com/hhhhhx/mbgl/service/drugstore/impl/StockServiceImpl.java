@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hhhhhx.mbgl.dto.StockCombineDTO;
 import com.hhhhhx.mbgl.dto.StockItemWithValueDTO;
+import com.hhhhhx.mbgl.dto.stock.StockNameDTO;
 import com.hhhhhx.mbgl.entity.Stock;
 import com.hhhhhx.mbgl.entity.User;
 import com.hhhhhx.mbgl.mapper.StockMapper;
@@ -53,9 +54,11 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
     }
 
     @Override
-    public IPage<Stock> pageList(BasePage param) {
-        Page<Stock> page = new Page<>(param.getPageIndex(),param.getPageSize());
-        return this.page(page);
+    public IPage<StockNameDTO> pageList(BasePage param) {
+        // 多一个name字段
+        Page<StockNameDTO> page = new Page<>(param.getPageIndex(),param.getPageSize());
+
+        return this.baseMapper.pageStockNameDTO(page);
     }
 
     @Override

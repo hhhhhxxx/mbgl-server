@@ -40,4 +40,6 @@ public interface IUserService extends IService<User> {
     IPage<User> pageList(UserPageParam param);
 
     List<PatientDTO> listConsult();
+
+    UserDTO getNameImageById(Integer id);
 }

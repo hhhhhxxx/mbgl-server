@@ -1,6 +1,10 @@
 package com.hhhhhx.mbgl.service.drugstore.impl;
+import cn.hutool.core.bean.BeanUtil;
+import com.hhhhhx.mbgl.dto.DoctorDTO;
+import com.hhhhhx.mbgl.dto.DrugShopItem;
 import java.time.LocalDateTime;
 
+import com.hhhhhx.mbgl.dto.prescription.PrescriptionDTO;
 import com.hhhhhx.mbgl.entity.Prescription;
 import com.hhhhhx.mbgl.entity.PrescriptionItem;
 import com.hhhhhx.mbgl.entity.enums.PrescriptionState;
@@ -8,6 +12,8 @@ import com.hhhhhx.mbgl.exception.MbglServiceException;
 import com.hhhhhx.mbgl.mapper.PrescriptionMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hhhhhx.mbgl.param.drugstore.order.Shop;
+import com.hhhhhx.mbgl.service.IDoctorService;
+import com.hhhhhx.mbgl.service.drugstore.IDrugService;
 import com.hhhhhx.mbgl.service.drugstore.IPrescriptionItemService;
 import com.hhhhhx.mbgl.service.drugstore.IPrescriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +32,20 @@ import java.util.List;
  * @since 2023-03-16
  */
 @Service
-public class PrescriptionServiceImpl extends ServiceImpl<PrescriptionMapper, Prescription> implements IPrescriptionService {
+    public class PrescriptionServiceImpl extends ServiceImpl<PrescriptionMapper, Prescription> implements IPrescriptionService {
 
     @Autowired
     IPrescriptionItemService prescriptionItemService;
 
+    @Autowired
+    IDrugService drugService;
+
+    @Autowired
+    IDoctorService doctorService;
+
     @Override
     @Transactional
-    public Integer createPrescription(Integer doctorId, Integer patientId, List<Shop> shopList) {
+    public Integer createPrescription(Integer doctorId, Integer patientId, List<Shop> shopList,String info) {
 
         Prescription prescription = new Prescription();
 
@@ -41,7 +53,7 @@ public class PrescriptionServiceImpl extends ServiceImpl<PrescriptionMapper, Pre
         prescription.setPatientId(patientId);
         prescription.setCreateTime(LocalDateTime.now());
         prescription.setState(PrescriptionState.NO_USE.getCode());
-
+        prescription.setInfo(info);
 
         boolean save = this.save(prescription);
 
@@ -75,5 +87,26 @@ public class PrescriptionServiceImpl extends ServiceImpl<PrescriptionMapper, Pre
 
         if(byId == null) return false;
         return PrescriptionState.NO_USE.getCode() == byId.getState();
+    }
+
+    @Override
+    public PrescriptionDTO getPrescriptionDTO(Integer id) {
+
+        Prescription prescription = this.getById(id);
+
+        if(prescription == null) {
+            throw new MbglServiceException();
+        }
+
+        PrescriptionDTO prescriptionDTO = BeanUtil.toBean(prescription, PrescriptionDTO.class);
+
+        List<DrugShopItem> preShopList = drugService.getPreShopList(id);
+
+        DoctorDTO doctor = doctorService.getDoctorByUserId(prescription.getDoctorId());
+
+        prescriptionDTO.setDoctorName(doctor.getName());
+        prescriptionDTO.setShopList(preShopList);
+
+        return prescriptionDTO;
     }
 }

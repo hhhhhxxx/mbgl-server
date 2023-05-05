@@ -13,4 +13,5 @@ public class WxSendSubscribeMessage implements Serializable {
     private String num;
     private String info;
     private LocalDateTime time;
+    private Long timeLong;
 }

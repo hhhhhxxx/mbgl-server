@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hhhhhx.mbgl.dto.StockCombineDTO;
 import com.hhhhhx.mbgl.dto.StockItemWithValueDTO;
+import com.hhhhhx.mbgl.dto.stock.StockNameDTO;
 import com.hhhhhx.mbgl.entity.Stock;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hhhhhx.mbgl.param.BasePage;
@@ -26,7 +27,7 @@ public interface IStockService extends IService<Stock> {
 
     boolean updateManyStock(List<Stock> updateList);
 
-    IPage<Stock> pageList(BasePage param);
+    IPage<StockNameDTO> pageList(BasePage param);
 
     List<Stock> getDangerStock();
 

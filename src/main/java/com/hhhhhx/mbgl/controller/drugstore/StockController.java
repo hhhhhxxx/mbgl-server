@@ -2,6 +2,7 @@ package com.hhhhhx.mbgl.controller.drugstore;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.hhhhhx.mbgl.dto.stock.StockNameDTO;
 import com.hhhhhx.mbgl.entity.Stock;
 import com.hhhhhx.mbgl.entity.User;
 import com.hhhhhx.mbgl.entity.result.RestResponse;
@@ -32,7 +33,7 @@ public class StockController {
     IStockService stockService;
 
     @GetMapping("/page/list")
-    public RestResponse<IPage<Stock>> pageList(@Valid BasePage param) {
+    public RestResponse<IPage<StockNameDTO>> pageList(@Valid BasePage param) {
         return RestResponse.ok(stockService.pageList(param));
     }
 
@@ -49,8 +50,4 @@ public class StockController {
     public RestResponse<Boolean> delete(@NotNull @PathVariable("id") Integer id) {
         return RestResponse.ok(stockService.removeById(id));
     }
-
-
-
-
 }

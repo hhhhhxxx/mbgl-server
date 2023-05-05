@@ -50,7 +50,7 @@
             <if test="order_id != null">
                 and o.id = #{order_id}
             </if>
-        </where>
+        </where> order by o.create_time desc
     </select>
 
 </mapper>

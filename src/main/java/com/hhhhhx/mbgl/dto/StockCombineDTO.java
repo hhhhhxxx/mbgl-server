@@ -10,4 +10,5 @@ import lombok.Setter;
 public class StockCombineDTO {
     private Integer drugId;
     private Integer quantity;
+    private Integer prescription;
 }

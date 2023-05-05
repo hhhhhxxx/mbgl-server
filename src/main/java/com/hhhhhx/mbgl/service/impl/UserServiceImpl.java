@@ -30,7 +30,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author hhx
@@ -47,7 +47,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public UserDTO login(UserLoginParam model) {
         User queryUser = this.getUserByUsername(model.getUsername());
 
-        if(queryUser != null && queryUser.getPassword().equals(model.getPassword())) {
+        if (queryUser != null && queryUser.getPassword().equals(model.getPassword())) {
 
             UserDTO userDTO = BeanUtil.toBean(queryUser, UserDTO.class);
             return userDTO;
@@ -63,11 +63,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         String openid = sessionKeyAndOpenId.getOpenid();
 
-        log.info("openId:{}",openid);
+        log.info("openId:{}", openid);
 
         User user = this.lambdaQuery().eq(User::getOpenId, openid).one();
 
-        if(user != null) {
+        if (user != null) {
             UserDTO userDTO = BeanUtil.toBean(user, UserDTO.class);
             return userDTO;
         } else {
@@ -105,24 +105,32 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Transactional
     public Boolean upLoadImage(UserUploadImageParam param) {
 
-        return this.lambdaUpdate().eq(User::getId,param.getId()).set(User::getImage,param.getImage()).update();
+        return this.lambdaUpdate().eq(User::getId, param.getId()).set(User::getImage, param.getImage()).update();
     }
 
     @Override
     public IPage<User> pageList(UserPageParam param) {
 
-        Page<User> page = new Page<>(param.getPageIndex(),param.getPageSize());
-
+        Page<User> page = new Page<>(param.getPageIndex(), param.getPageSize());
 
 
         return this.lambdaQuery()
-                .eq(param.getRoleId() != null,User::getRoleId,param.getRoleId())
-                .like(StrUtil.isNotBlank(param.getUsername()),User::getUsername,param.getUsername()).page(page);
+                .eq(param.getRoleId() != null, User::getRoleId, param.getRoleId())
+                .like(StrUtil.isNotBlank(param.getUsername()), User::getUsername, param.getUsername()).page(page);
     }
 
     @Override
     public List<PatientDTO> listConsult() {
         return this.baseMapper.getConsultPatient();
+    }
+
+
+    @Override
+    public UserDTO getNameImageById(Integer id) {
+        User byId = this.getById(id);
+        if (byId == null) throw new MbglServiceException();
+        UserDTO userDTO = BeanUtil.toBean(byId, UserDTO.class);
+        return userDTO;
     }
 
 

@@ -3,10 +3,10 @@
 <mapper namespace="com.hhhhhx.mbgl.mapper.StockMapper">
 
 
-
     <resultMap id="StockCombineDTOMap" type="com.hhhhhx.mbgl.dto.StockCombineDTO">
         <result column="drug_id" property="drugId" jdbcType="INTEGER"/>
         <result column="quantity" property="quantity" jdbcType="INTEGER"/>
+        <result column="prescription" property="prescription" jdbcType="INTEGER"/>
     </resultMap>
 
 
@@ -19,15 +19,15 @@
     </resultMap>
 
 
-
     <select id="getStockCombineDTOByDrugIds" resultMap="StockCombineDTOMap">
-        select drug_id, sum(quantity) as quantity from mbgl.t_stock s
-        where drug_id in
+        select s.drug_id, d.prescription, sum(quantity) as quantity from mbgl.t_stock s
+        inner join mbgl.t_drug d on s.drug_id =  d.id
+        where s.drug_id in
         <foreach collection="drugIds" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
         and quantity > 0
-        GROUP BY s.drug_id order by FIELD(drug_id,
+        GROUP BY s.drug_id,d.prescription order by FIELD(drug_id,
         <foreach collection="drugIds" item="item" open="" separator="," close=")">
             #{item}
         </foreach>
@@ -76,10 +76,13 @@
     </update>
 
     <select id="getDangerStock" resultType="stock">
-        select * from mbgl.t_stock s
-        inner join mbgl.t_drug d on d.id = s.drug_id
-        where s.level = 0 and  ( DATE_SUB(DATE_ADD(s.prod_time, INTERVAL d.valid_month month),INTERVAL 6 month) &lt; DATE_FORMAT( NOW( ), '%Y-%m-%d' )
-         or DATE_ADD(s.prod_time, INTERVAL d.valid_month month) &lt; DATE_FORMAT( NOW( ), '%Y-%m-%d' ) )
+        select *
+        from mbgl.t_stock s
+                 inner join mbgl.t_drug d on d.id = s.drug_id
+        where s.level = 0
+          and (DATE_SUB(DATE_ADD(s.prod_time, INTERVAL d.valid_month month), INTERVAL 6 month) &lt;
+               DATE_FORMAT(NOW(), '%Y-%m-%d')
+            or DATE_ADD(s.prod_time, INTERVAL d.valid_month month) &lt; DATE_FORMAT(NOW(), '%Y-%m-%d'))
     </select>
 
     <update id="updateDangerStock">
@@ -88,9 +91,11 @@
             <trim prefix=" level = case " suffix="end">
                 when DATE_ADD(s.prod_time, INTERVAL d.valid_month month) &lt; DATE_FORMAT( NOW( ), '%Y-%m-%d' )
                 then s.level + 3
-                when DATE_SUB(DATE_ADD(s.prod_time, INTERVAL d.valid_month month),INTERVAL 1 month) &lt; DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+                when DATE_SUB(DATE_ADD(s.prod_time, INTERVAL d.valid_month month),INTERVAL 1 month) &lt; DATE_FORMAT(
+                NOW( ), '%Y-%m-%d' )
                 then s.level + 2
-                when DATE_SUB(DATE_ADD(s.prod_time, INTERVAL d.valid_month month),INTERVAL 6 month) &lt; DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+                when DATE_SUB(DATE_ADD(s.prod_time, INTERVAL d.valid_month month),INTERVAL 6 month) &lt; DATE_FORMAT(
+                NOW( ), '%Y-%m-%d' )
                 then s.level + 1
                 else 0
             </trim>
@@ -103,4 +108,17 @@
         </where>
     </update>
 
+    <select id="pageStockNameDTO" resultType="com.hhhhhx.mbgl.dto.stock.StockNameDTO">
+        select s.id,
+               s.drug_id,
+               s.quantity,
+               s.prod_time,
+               s.in_time,
+               s.level,
+               s.batch_id,
+               s.version,
+               d.name
+        from mbgl.t_stock s
+                    inner join mbgl.t_drug d on d.id = s.drug_id
+    </select>
 </mapper>

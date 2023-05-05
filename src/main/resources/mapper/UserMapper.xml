@@ -16,8 +16,7 @@
     </select>
 
     <select id="getDoctorOfPatient" resultType="com.hhhhhx.mbgl.dto.DoctorDTO">
-
-        select d.id,d.name,d.sex,d.phone,d.room,d.job_year,d.phone,d.hospital from mbgl.t_user d
+        select d.id,d.name,d.sex,d.phone,d.room,d.job_year,d.phone,d.hospital,d.image from mbgl.t_user d
         inner join mbgl.t_connect c on c.doctor_user_id = d.id
         <where>
             <if test="true">

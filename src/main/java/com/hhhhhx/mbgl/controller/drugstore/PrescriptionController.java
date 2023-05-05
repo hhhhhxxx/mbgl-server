@@ -3,6 +3,7 @@ package com.hhhhhx.mbgl.controller.drugstore;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hhhhhx.mbgl.dto.DrugViewDto;
+import com.hhhhhx.mbgl.dto.prescription.PrescriptionDTO;
 import com.hhhhhx.mbgl.entity.result.RestResponse;
 import com.hhhhhx.mbgl.param.drugstore.drug.DrugSearchParam;
 import com.hhhhhx.mbgl.service.drugstore.IPrescriptionService;
@@ -35,5 +36,11 @@ public class PrescriptionController {
     public RestResponse<Boolean> judgePreValid(@PathVariable("id") @NotNull Integer id) {
 
         return RestResponse.ok(prescriptionService.judgePreValid(id));
+    }
+
+    @GetMapping("/get/{id}")
+    public RestResponse<PrescriptionDTO> getPrescription(@PathVariable("id") @NotNull Integer id) {
+
+        return RestResponse.ok(prescriptionService.getPrescriptionDTO(id));
     }
 }

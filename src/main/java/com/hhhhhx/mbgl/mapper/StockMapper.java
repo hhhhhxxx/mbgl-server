@@ -1,7 +1,9 @@
 package com.hhhhhx.mbgl.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hhhhhx.mbgl.dto.StockCombineDTO;
 import com.hhhhhx.mbgl.dto.StockItemWithValueDTO;
+import com.hhhhhx.mbgl.dto.stock.StockNameDTO;
 import com.hhhhhx.mbgl.entity.Stock;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -29,4 +31,6 @@ public interface StockMapper extends BaseMapper<Stock> {
    List<Stock> getDangerStock();
 
    int updateDangerStock(@Param("update_list") List<Stock> updateList);
+
+   IPage<StockNameDTO> pageStockNameDTO(@Param("page") IPage<StockNameDTO> page);
 }
